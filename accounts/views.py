@@ -1,22 +1,23 @@
 from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 from django.db import IntegrityError
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
 from . import forms
 
 def signup(request):
+   context = {}
    if request.method == 'POST':
-      form = UserCreationForm(request.POST)
+      form = forms.SignUpForm(request.POST)
       if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('home')
-   else:
-      form = UserCreationForm()
-   return render(request, 'signup.html', {'form' : form})
+            try:
+               user = User.objects.create_user(form.cleaned_data['username'], password=form.cleaned_data['password'])
+               return HttpResponseRedirect(reverse('login'))
+            except IntegrityError:
+            	form.add_error('username', 'Username already exists!')
+      context['form'] = form
+   return render(request, 'signup.html', context)
 
 def do_login(request):
    context = {}
