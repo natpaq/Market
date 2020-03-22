@@ -1,5 +1,5 @@
 from django.urls import path, include
-from item.views import index
+
 from . import views
 
 

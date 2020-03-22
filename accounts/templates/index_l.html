@@ -1,4 +1,4 @@
-{% extends 'navbar.html' %}
+{% extends 'navbar_l.html' %}
 
 {% block content %}
 <html lang="en">
@@ -25,8 +25,8 @@
           <h1 class="my-4">The One Stop Shop</h1>
              <div class="list-group">
                <p class="list-group-item">{{request.user.username}}, you are logged in</p>
-		 <a href="list_item.php" class="list-group-item">List an item for sale</p>
-                 <a class="list-group-item">Logout</a>
+		 <a href="#" class="list-group-item">List an item for sale</p>
+                 <a href="{% url 'logout' %}" class="list-group-item">Logout</a>
               </div>
        </div>
       <div class="col-lg-9">
