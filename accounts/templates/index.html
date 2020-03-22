@@ -1,0 +1,152 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Aidan Wadin">
+  <meta name="description" content="Marketplace for COMP 307 Final Project">
+
+  <title>OSS</title>
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/shop-homepage.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Content -->
+  <div class="container">
+    <div class="row">
+          <div class="col-lg-3">
+             <h1 class="my-4">The One Stop Shop</h1>
+             <div class="list-group">
+                <p class="list-group-item">You are not logged in</p>
+                <a href="{% url 'signup' %}" class="list-group-item">Create an account</a>
+                <a href="{% url 'login' %}" class="list-group-item">Login to existing account</a>
+             </div>
+          </div>
+       <div class="col-lg-9">
+          <div class="banner">
+             <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+          </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item One</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Description </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Inventory: </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Two</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Description</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Inventory:</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Three</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Description</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Inventory: </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Four</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Description</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Inventory: </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Five</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Description</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Inventory: </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Six</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Description</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Inventory: </small>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Aidan Wadin</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+
+{% endblock %}
