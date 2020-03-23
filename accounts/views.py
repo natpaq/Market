@@ -3,12 +3,8 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . import forms
-
-# user must be logged in to be able to access view
-#@login_required
 
 def index(request):
 	context = {}

@@ -25,7 +25,7 @@
           <h1 class="my-4">The One Stop Shop</h1>
              <div class="list-group">
                <p class="list-group-item">{{request.user.username}}, you are logged in</p>
-		 <a href="#" class="list-group-item">List an item for sale</p>
+		 <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</p>
                  <a href="{% url 'logout' %}" class="list-group-item">Logout</a>
               </div>
        </div>

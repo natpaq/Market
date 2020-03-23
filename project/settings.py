@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-   
+    'item',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+		'django.template.context_processors.media',
             ],
         },
     },
@@ -119,7 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'

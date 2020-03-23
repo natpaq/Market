@@ -1,0 +1,44 @@
+{% extends 'navbar_l.html' %}
+{% block content %}
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <title>OSS</title>
+   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="css/signup.css" rel="stylesheet">
+</head>
+<body>
+<h1>List An Item For Sale</h1>
+<form method="post" action="" enctype="multipart/form-data">
+   {% csrf_token %}
+   <div class="form-group">
+      <label>Select an image:</label>
+      <input type="file" name="image" accept="image/*">
+      {{form.image.errors}}
+   </div>
+   <div class="form-group">
+      <label>Item Name</label>
+      <input type="text" class="form-control" name="itemname">
+      {{form.itemname.errors}}
+   </div>
+   <div class="form-group">
+      <label>Item Description</label><br />
+      <textarea name="descrip" cols="50" rows="10"></textarea><br />
+      {{form.descrip.errors}}
+   </div>
+   <div class="form-group">
+      <label>Asking Price</label>
+      <input type="number" name="price" min="0" value="0" step=".01">
+      {{form.price.errors}}
+   </div>
+   <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" name="inv_count" min="0" value="0" step="1">
+      {{form.inv_count.errors}}
+   </div> 
+   <input type="submit" value="Submit"/>
+</form>
+</body>
+</html>
+{% endblock %}
