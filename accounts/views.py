@@ -5,13 +5,15 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from . import forms
+from item.models import Item
 
 def index(request):
-	context = {}
-	if request.user.is_authenticated:
-		return render(request, 'index_l.html', context)
-	else:
-		return render(request, 'index.html', context)
+    items1 = Item.objects.all()
+    context = {'items': items1}
+    if request.user.is_authenticated:
+        return render(request, 'index_l.html', context)
+    else:
+        return render(request, 'index.html', context)
 
 def signup(request):
    context = {}
@@ -19,12 +21,12 @@ def signup(request):
       form = forms.SignUpForm(request.POST)
       if form.is_valid():
             try:
-	       # password hashing is taken care of
+           # password hashing is taken care of
                user = User.objects.create_user(form.cleaned_data['username'], password=form.cleaned_data['password'])
                return HttpResponseRedirect(reverse('login'))
-	    #display error in form
+        #display error in form
             except IntegrityError:
-            	form.add_error('username', 'Username already exists!')
+                form.add_error('username', 'Username already exists!')
       # display form again
       context['form'] = form
    return render(request, 'signup.html', context)
@@ -36,7 +38,7 @@ def do_login(request):
       if form.is_valid():
          user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
          if user is not None:
-	    # stores session of logged in user
+        # stores session of logged in user
             login(request, user)
             if 'next' in request.GET:
                return HttpResponseRedirect(request.GET['next'])
