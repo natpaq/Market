@@ -11,8 +11,8 @@
   <meta name="description" content="Marketplace for COMP 307 Final Project">
 
   <title>OSS</title>
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/shop-homepage.css" rel="stylesheet">
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/css/shop-homepage.css" rel="stylesheet">
 
 </head>
 
@@ -24,16 +24,18 @@
        <div class="col-lg-3">
           <h1 class="my-4">The One Stop Shop</h1>
              <div class="list-group">
-               <p class="list-group-item">{{request.user.username}}, you are logged in</p>
-		 <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</p>
-                 <a href="{% url 'logout' %}" class="list-group-item">Logout</a>
+               <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
+		 <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</a>
+                 <a href="#" class="list-group-item">View your listed items</a>
+		 <a href="#" class="list-group-item">See what's for sale</a>
+		 <a href="{% url 'logout' %}" class="list-group-item">Logout</a>
               </div>
        </div>
       <div class="col-lg-9">
 
           <div class="banner">
-            <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
-          </div>
+ <!--           <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+  -->        </div>
 
         <div class="row">
 
@@ -68,8 +70,8 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
