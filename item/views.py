@@ -20,3 +20,12 @@ def add_item(request):
 	      return HttpResponseRedirect(reverse('index')) 	
 	   context['form'] = form
 	return render(request, 'list_item.html', context)
+
+def add_to_cart(request):
+	if request.method == 'POST':
+	   form = CartItemForm(request.POST)
+	   if form.is_valid():
+	      cart = Cart.add(item=form.cleaned_data['item'], quantity=form.cleaned_data['quantity'])
+	      data = {"status": "success", "total": cart.total, "count": cart.count }
+	      return HttpResponseRedirect(reverse('index'))
+	return render(request, 'index_l.html', context)
