@@ -13,3 +13,8 @@ class Item(models.Model):
 def __str__(self):
         return self.owner + self.image + self.itemname + self.descrip + self.price + self.inv_count
 	
+
+class Cart(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	items = models.ManyToManyField('Item')
+	
