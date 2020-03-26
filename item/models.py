@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 class Item(models.Model):
 	owner = models.ForeignKey(User, on_delete=models.CASCADE)
 	image = models.ImageField(upload_to='images/')
@@ -14,7 +15,11 @@ def __str__(self):
         return self.owner + self.image + self.itemname + self.descrip + self.price + self.inv_count
 	
 
-class Cart(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	items = models.ManyToManyField('Item')
+class OrderItem(models.Model):
+	item = models.OneToOneField(Item, on_delete=models.CASCADE)
+	quantity = models.PositiveIntegerField(default=0)
 	
+	def __str__(self):
+		return self.item 
+	
+

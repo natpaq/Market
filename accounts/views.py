@@ -8,14 +8,22 @@ from . import forms
 from item.models import Item
 from django.shortcuts import get_list_or_404, get_object_or_404
 
+from item.forms import OrderItemForm
+from item.models import Item, OrderItem
 
 def index(request):
-    items1 = Item.objects.all()
-    context = {'items': items1}
-    if request.user.is_authenticated:
-        return render(request, 'index_l.html', context)
-    else:
-        return render(request, 'index.html', context)
+   items1 = Item.objects.all()
+   context = {'items': items1}
+   if request.user.is_authenticated:
+      if request.method == 'POST':
+         form = OrderItemForm(request.POST)
+         if form.is_valid():
+            #order_item = form.save()
+            order_item = OrderItem.objects.create(form.cleaned_data['item'], form.cleaned_data['quantity'])
+            #order_item.save() 
+            return HttpResponseRedirect(reverse('index'))
+      return render(request, 'index_l.html', context)
+   return render(request, 'index.html', context)
 
 
 def signup(request):
@@ -70,3 +78,4 @@ def item_update(request, id):
         form = forms.AddItemForm(instance=post)
     context = {'form': form}
     return render(request, "list_item.html", context)
+

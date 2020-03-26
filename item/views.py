@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Item
+from django.db.models import When, Case
 
 from . import forms
 
@@ -29,3 +30,13 @@ def add_to_cart(request):
 	      data = {"status": "success", "total": cart.total, "count": cart.count }
 	      return HttpResponseRedirect(reverse('index'))
 	return render(request, 'index_l.html', context)
+#user items
+def my_items(request):
+	# want to only display user's objects -- need to fix
+	items1 = Item.objects.all()
+	#items1 = Item.objects.filter(owner=Case(
+	#When request.user = Item.owner))
+	context = {'items': items1}
+	return render(request, 'my_items.html', context)
+
+
