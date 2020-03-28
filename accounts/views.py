@@ -20,7 +20,7 @@ def index(request):
          if form.is_valid():
             #order_item = form.save()
             order_item = OrderItem.objects.create(form.cleaned_data['item'], form.cleaned_data['quantity'])
-            #order_item.save() 
+            #order_item.save()
             return HttpResponseRedirect(reverse('index'))
       return render(request, 'index_l.html', context)
    return render(request, 'index.html', context)
