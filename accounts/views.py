@@ -9,7 +9,7 @@ from item.models import Item
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 from item.forms import OrderItemForm
-from item.models import Item, OrderItem
+from item.models import Item, OrderItem, Order
 
 def index(request):
    items1 = Item.objects.all()

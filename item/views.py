@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Item
+from .models import Item, OrderItem, Order
 from django.db.models import When, Case
+from django.utils import timezone
+
 
 from . import forms
 
@@ -38,5 +40,23 @@ def my_items(request):
 	#When request.user = Item.owner))
 	context = {'items': items1}
 	return render(request, 'my_items.html', context)
+
+def add_to_cart(request, id):
+	item = get_object_or_404(Item, id=id)
+	order_item, created = OrderItem.objects.get_or_create(item=item, user=request.user, ordered=False)
+	order_inital = Order.objects.filter(user=request.user, ordered=False)
+	if order_inital.exists():
+		order = order_inital[0]
+		if order.items.filter(item__id=item.id).exists():
+			order_item.quantity += 1
+			order_item.save()
+		else:
+			order.items.add(order_item)
+	else:
+		date = timezone.now()
+		order = Order.objects.create(user=request.user, ordered_date=date)
+		order.items.add(order_item)
+	return redirect(reverse('my_items'))
+
 
 
