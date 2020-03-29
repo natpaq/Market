@@ -1,0 +1,78 @@
+{% extends 'navbar_l.html' %}
+{% block content %}
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="author" content="Aidan Wadin">
+      <meta name="description" content="Marketplace for COMP 307 Final Project">
+      <title>OSS</title>
+      <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="static/css/shop-homepage.css" rel="stylesheet">
+   </head>
+   <body>
+      <!-- Display user options -->
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <h1 class="my-4">The One Stop Shop</h1>
+               <div class="list-group">
+                  <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
+                  <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</a>
+                  <a href="{% url 'index' %}" class="list-group-item">Return to marketplace</a>
+               </div>
+            </div>
+            <div class="col-lg-9">
+               <div class="banner">
+                  <h1 class="display-4">{{request.user.username}}'s Cart Contents:</h1>
+               </div>
+               <div class="row">
+                  <table class="table" border="1" onload="totalPrice()">
+                     <thead class="thead-dark">
+                        <tr>
+                           <th scope="col">Item</th>
+                           <th scope="col"></th>
+                           <th scope="col">Quantity</th>
+                           <th scope="col">Price</th>
+                        </tr>
+                     </thead>
+                     <!-- Display contents of User's cart -->
+                     {% for orderitem in orderitems %}
+                     {% if orderitem.user == request.user %}
+                     {% if orderitem.ordered == False %}     
+                     <tr>
+                        <td>{{ orderitem.item.itemname }}</td>
+                        <td>
+                           <p><img class="img" width=40% height=40% src= {{orderitem.item.image.url}} alt=""></p>
+                        </td>
+                        <td class="amount">{{ orderitem.quantity }}</td>
+                        <td class="price">{{ orderitem.item.price }}</td>
+                     </tr>
+                     {% endif %}      
+                     {% endif %}
+                     {% endfor %}
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <footer class="py-5 bg-dark">
+         <div class="navbar fixed-bottom">
+         </div>
+      </footer>
+      <!-- Bootstrap core JavaScript -->
+      <script src="static/vendor/jquery/jquery.min.js"></script>
+      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script>
+	function totalPrice(){
+		var arr = document.getElementsByClassName("price");
+		var amt = document.getElementsByClassName("amount");
+		count = 0;
+		for( i=0; i < arr.length; i++){
+			var y = arr[i].innerHTML;
+			count = count + parseInt(amt[i])*parseFloat(y);
+		}
+	}
+   </body>
+</html>
+{% endblock %}

@@ -17,13 +17,13 @@
             <span class="navbar-toggler-icon"></span>
             </button> 
             <div class="collapse navbar-collapse" id="navbarResponsive">
-               <a class="navbar-brand" href="#">The One Stop Shop</a>
+               <a class="navbar-brand" href="{% url 'index' %}">The One Stop Shop</a>
                <ul class="navbar-nav nav-fill w-100">
                   <li class="nav-item active">
                      <a class="nav-link" href="{% url 'index' %}">See What's For Sale</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="#">View Cart</a>
+                     <a class="nav-link" href="{% url 'my_cart' %}">View Cart</a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link" href="#">Check Out</a>
