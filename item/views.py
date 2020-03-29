@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .models import Item, OrderItem, Order
 from django.db.models import When, Case
 from django.utils import timezone
+from django.contrib import messages
 
 
 from . import forms
@@ -24,14 +25,6 @@ def add_item(request):
 	   context['form'] = form
 	return render(request, 'list_item.html', context)
 
-def add_to_cart(request):
-	if request.method == 'POST':
-	   form = CartItemForm(request.POST)
-	   if form.is_valid():
-	      cart = Cart.add(item=form.cleaned_data['item'], quantity=form.cleaned_data['quantity'])
-	      data = {"status": "success", "total": cart.total, "count": cart.count }
-	      return HttpResponseRedirect(reverse('index'))
-	return render(request, 'index_l.html', context)
 #user items
 def my_items(request):
 	# want to only display user's objects -- need to fix
@@ -50,13 +43,39 @@ def add_to_cart(request, id):
 		if order.items.filter(item__id=item.id).exists():
 			order_item.quantity += 1
 			order_item.save()
+			messages.info(request, "This item has been updated in your cart!")
 		else:
 			order.items.add(order_item)
+			messages.info(request, "This item has been added to your cart!")
+			return redirect(reverse('index'))
 	else:
 		date = timezone.now()
 		order = Order.objects.create(user=request.user, ordered_date=date)
 		order.items.add(order_item)
-	return redirect(reverse('my_items'))
+		messages.info(request, "This item has been added to your cart!")
+		return redirect(reverse('index'))
+
+def remove_from_cart(request, id):
+	item = get_object_or_404(Item, id=id)
+	order_inital = Order.objects.filter(user=request.user, ordered=False)
+	if order_inital.exists():
+		order = order_inital[0]
+		if order.items.filter(item__id=item.id).exists():
+			order_item = OrderItem.objects.filter(item=item, user=request.user, ordered=False)[0]
+			if order_item.quantity > 1:
+				order_item.quantity -= 1
+				order_item.save()
+			else:
+				order.items.remove(order_item)
+			messages.info(request, "This item has been removed from your cart!")
+			return redirect(reverse('index'))
+		else:
+			messages.info(request, "This item was not in your cart!")
+			return redirect(reverse('index'))
+	else:
+		messages.info(request, "You do not have an active order!")
+		return redirect(reverse('index'))
+
 
 
 

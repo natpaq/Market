@@ -10,6 +10,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 
 from item.forms import OrderItemForm
 from item.models import Item, OrderItem, Order
+from item.views import add_to_cart, remove_from_cart
 
 def index(request):
    items1 = Item.objects.all()

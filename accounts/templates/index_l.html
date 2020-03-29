@@ -1,5 +1,6 @@
 {% extends 'navbar_l.html' %}
 {% block content %}
+
 <html lang="en">
    <head>
       <meta charset="utf-8">
@@ -11,6 +12,18 @@
       <link href="static/css/shop-homepage.css" rel="stylesheet">
    </head>
    <body>
+      <div clas="mt-5">
+         {% if messages %}
+            {% for message in messages %}
+               <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+            {% endfor %}
+         {% endif %}
+      </div>
       <!-- Display user options -->
       <div class="container">
          <div class="row">
@@ -73,6 +86,9 @@
                                        <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cancel</a>
                                     </div>
                                  </form>
+                                 <!-- Temp hot-fix below, update form in time-->
+                                 <a href="{{ item.get_add_to_cart_url }}" class="btn btn-primary">Add to Cart (1)</a>
+                                 <a href="{{ item.get_remove_from_cart_url }}" class="btn btn-danger">Remove from Cart (1)</a>
                               </div>
                            </div>
                         </div>

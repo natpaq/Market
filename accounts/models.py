@@ -1,6 +1,6 @@
 from django.db import models
 
-from item.models import Item
+from item.models import Item, Order, OrderItem
 
 
 

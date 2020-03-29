@@ -16,6 +16,9 @@ class Item(models.Model):
     def get_add_to_cart_url(self):
         return reverse("add_to_cart", kwargs={'id': self.id})
 
+    def get_remove_from_cart_url(self):
+        return reverse("remove_from_cart", kwargs={'id': self.id})
+
 
 def __str__(self):
     return self.owner + self.image + self.itemname + self.descrip + self.price + self.inv_count
