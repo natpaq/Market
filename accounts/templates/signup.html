@@ -1,24 +1,24 @@
 {% extends 'navbar.html' %}
 {% block content %}
-
+<!-- User Sign Up Form -->
 <head>
    <h1>Sign Up</h1>
    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
    <link href="static/css/signup.css" rel="stylesheet">
 </head>
 <form method = "post" action="">
-  {% csrf_token %}
-  <div class="form-group">
-    <label>Please enter a username:</label>
-    <input type="text" class="form-control" name="username" placeholder="Ex: Bob" value="{{form.data.username}}"/>
-    {{ form.username.errors }}
-  </div>
-  <div class="form-group">
-    <label>Please enter a password:</label>
-    <input type="password" class="form-control" name="password" placeholder="Ex: 1lovecats">
-    {{ form.password.errors }}
-  </div>
-  <input type="submit"/>
+   {% csrf_token %}
+   <div class="form-group">
+      <label>Please enter a username:</label>
+      <input type="text" class="form-control" name="username" placeholder="Ex: Bob" value="{{form.data.username}}"/>
+      {{ form.username.errors }}
+   </div>
+   <div class="form-group">
+      <label>Please enter a password:</label>
+      <input type="password" class="form-control" name="password" placeholder="Ex: 1lovecats">
+      {{ form.password.errors }}
+   </div>
+   <input type="submit"/>
 </form>
 {% endblock %}
 

@@ -1,137 +1,98 @@
 {% extends 'navbar_l.html' %}
-
 {% block content %}
 <html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="Aidan Wadin">
-  <meta name="description" content="Marketplace for COMP 307 Final Project">
-
-  <title>OSS</title>
-  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="static/css/shop-homepage.css" rel="stylesheet">
-
-</head>
-
-<body>
-  <!-- Content -->
-  <div class="container">
-
-    <div class="row">
-       <div class="col-lg-3">
-          <h1 class="my-4">The One Stop Shop</h1>
-             <div class="list-group">
-               <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
-		 <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</a>
-                 <a href="{% url 'my_items' %}" class="list-group-item">View your listed items</a>
-		 <a href="#" class="list-group-item">See what's for sale</a>
-		 <a href="{% url 'logout' %}" class="list-group-item">Logout</a>
-              </div>
-       </div>
-      <div class="col-lg-9">
-
-        <div class="banner">
-          <img class="d-block img-fluid" src="https://d2td6mzj4f4e1e.cloudfront.net/wp-content/uploads/sites/9/2019/05/One-Stop-2019-620x330.jpg" alt="http://placehold.it/900x350">
-        </div>
-
-        <div class="row">
-
-          {% for item in items %}
-
-          {% if item.owner == request.user %}
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src= {{item.image.url}} alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">{{ item.itemname }}</a>
-                </h4>
-                <h5>{{item.price}}</h5>
-                <p class="card-text"><b>Posted by:</b> {{item.owner}} <br> <b>Description:</b> {{item.descrip}} </p>
-                <a class="nav-link" href="{% url 'item_update' id=item.id %}">Edit Item</a>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Inventory: {{item.inv_count}} </small>
-              </div>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="author" content="Aidan Wadin">
+      <meta name="description" content="Marketplace for COMP 307 Final Project">
+      <title>OSS</title>
+      <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="static/css/shop-homepage.css" rel="stylesheet">
+   </head>
+   <body>
+      <!-- Display user options -->
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <h1 class="my-4">The One Stop Shop</h1>
+               <div class="list-group">
+                  <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
+                  <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</a>
+                  <a href="{% url 'my_items' %}" class="list-group-item">View your listed items</a>
+               </div>
             </div>
-          </div>
-
-          {% else %}
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src= {{item.image.url}} alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">{{ item.itemname }}</a>
-                </h4>
-                <h5>{{item.price}}</h5>
-                <p class="card-text"><b>Posted by:</b> {{item.owner}} <br> <b>Description:</b> {{item.descrip}} </p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtocart"> Add to Cart</button>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Inventory: {{item.inv_count}} </small>
-              </div>
-            </div>
-          </div>
-          
-          <div class="modal fade right" id="addtocart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-          <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <a class="heading"><b>Add to Cart</b></a>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true" class="white-text">&times;</span>
-                </button>
-              </div>
-              
-              <div class="modal-body">
-                  <div class="col-9">
-                    <p>How many of this item would you like to add to your cart?</p>
-                    <form method="post" action="">
-		      {% csrf_token %}
-		      <div class="form-group">
-		        <input type="hidden" name="item" value={{item}}>
-		      </div> 
-                      <div class="form-group">
-                        <label for="quantity">Quantity:</label>
-                        <input class ="quantity" name="quantity" type="number"  min="1" max={{item.inv_count}}>
-                      </div>
-                      <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cancel</a>
-                      </div>
-                    </form>
+            <div class="col-lg-9">
+               <div class="banner">
+                  <img class="d-block img-fluid" src="https://d2td6mzj4f4e1e.cloudfront.net/wp-content/uploads/sites/9/2019/05/One-Stop-2019-620x330.jpg" alt="http://placehold.it/900x350">
+               </div>
+               <div class="row">
+                  <!-- Display only items posted by other users since those are the items the instance user can purchase -->
+                  {% for item in items %}
+                  {% if item.owner != request.user %}
+                  <div class="col-lg-4 col-md-6 mb-4">
+                     <div class="card h-100">
+                        <p><img class="card-img-top" src= {{item.image.url}} alt=""></p>
+                        <div class="card-body">
+                           <h4 class="card-title">
+                              <div class="itemname">{{ item.itemname }}</div>
+                           </h4>
+                           <h5>{{item.price}}</h5>
+                           <p class="card-text"><b>Posted by:</b> {{item.owner}} <br> <b>Description:</b> {{item.descrip}} </p>
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtocart"> Add to Cart</button>
+                        </div>
+                        <div class="card-footer">
+                           <small class="text-muted">Inventory: {{item.inv_count}} </small>
+                        </div>
+                     </div>
                   </div>
-                </div>
+                  <!--Pop-up add to cart execution-->
+                  <div class="modal fade right" id="addtocart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+                     <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <a class="heading"><b>Add to Cart</b></a>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true" class="white-text">&times;</span>
+                              </button>
+                           </div>
+                           <div class="modal-body">
+                              <div class="col-9">
+                                 <p>How many of this item would you like to add to your cart?</p>
+                                 <form method="post" action="">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                       <input type="hidden" name="item" value={{item}}>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="quantity">Quantity:</label>
+                                       <input class ="quantity" name="quantity" type="number"  min="1" max={{item.inv_count}}>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                       <button type="submit" class="btn btn-primary">Submit</button>
+                                       <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cancel</a>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+               </div>
             </div>
-          </div>
-        </div>
-        {% endif %}
-          
-          {% endfor %}
-
-        </div>
-
+         </div>
       </div>
-    </div>
-  </div>
-
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Aidan Wadin</p>
-    </div>
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="static/vendor/jquery/jquery.min.js"></script>
-  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
+      <footer class="py-5 bg-dark">
+         <div class="container">
+            <p class="m-0 text-center text-white">Aidan Wadin</p>
+         </div>
+      </footer>
+      <!-- Bootstrap core JavaScript -->
+      <script src="static/vendor/jquery/jquery.min.js"></script>
+      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   </body>
 </html>
-
 {% endblock %}
+

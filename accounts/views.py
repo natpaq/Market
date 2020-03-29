@@ -73,7 +73,7 @@ def item_update(request, id):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('my_items'))
     else:
         form = forms.AddItemForm(instance=post)
     context = {'form': form}
