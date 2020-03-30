@@ -7,12 +7,9 @@ from .models import Item, OrderItem, Order
 from django.db.models import When, Case
 from django.utils import timezone
 from django.contrib import messages
-
-
 from . import forms
 
-# user must be logged in to be able to access view
-# @login_required
+
 def add_item(request):
 	context = {}
 	if request.method == 'POST':
@@ -25,14 +22,16 @@ def add_item(request):
 	   context['form'] = form
 	return render(request, 'list_item.html', context)
 
-#user items
 def my_items(request):
-	# want to only display user's objects -- need to fix
 	items1 = Item.objects.all()
-	#items1 = Item.objects.filter(owner=Case(
-	#When request.user = Item.owner))
 	context = {'items': items1}
 	return render(request, 'my_items.html', context)
+
+def my_cart(request):
+	orderitems = OrderItem.objects.all()
+	context = {'orderitems' : orderitems}
+	return render(request, 'view_cart.html', context)
+
 
 def add_to_cart(request, id):
 	item = get_object_or_404(Item, id=id)
