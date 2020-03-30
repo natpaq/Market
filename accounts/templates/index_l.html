@@ -52,7 +52,7 @@
                            </h4>
                            <h5>{{item.price}}</h5>
                            <p class="card-text"><b>Posted by:</b> {{item.owner}} <br> <b>Description:</b> {{item.descrip}} </p>
-                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtocart"> Add to Cart</button>
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtocart"> Details</button>
                         </div>
                         <div class="card-footer">
                            <small class="text-muted">Inventory: {{item.inv_count}} </small>
@@ -71,24 +71,10 @@
                            </div>
                            <div class="modal-body">
                               <div class="col-9">
-                                 <p>How many of this item would you like to add to your cart?</p>
-                                 <form method="post" action="">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                       <input type="hidden" name="item" value={{item}}>
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="quantity">Quantity:</label>
-                                       <input class ="quantity" name="quantity" type="number"  min="1" max={{item.inv_count}}>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                       <button type="submit" class="btn btn-primary">Submit</button>
-                                       <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cancel</a>
-                                    </div>
-                                 </form>
+                                 <p>Add/remove an item from your cart:</p>
                                  <!-- Temp hot-fix below, update form in time-->
-                                 <a href="{{ item.get_add_to_cart_url }}" class="btn btn-primary">Add to Cart (1)</a>
-                                 <a href="{{ item.get_remove_from_cart_url }}" class="btn btn-danger">Remove from Cart (1)</a>
+                                 <a href="{{ item.get_add_to_cart_url }}" class="btn btn-primary">Add to Cart</a>
+                                 <a href="{{ item.get_remove_from_cart_url }}" class="btn btn-danger">Remove from Cart</a>
                               </div>
                            </div>
                         </div>

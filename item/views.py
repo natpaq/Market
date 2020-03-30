@@ -44,6 +44,7 @@ def add_to_cart(request, id):
 			order_item.quantity += 1
 			order_item.save()
 			messages.info(request, "This item has been updated in your cart!")
+			return redirect(reverse('index'))
 		else:
 			order.items.add(order_item)
 			messages.info(request, "This item has been added to your cart!")
