@@ -29,7 +29,8 @@ def my_items(request):
 
 def my_cart(request):
 	orderitems = OrderItem.objects.all()
-	context = {'orderitems' : orderitems}
+	order = Order.objects.get(user=request.user)
+	context = {'orderitems' : orderitems, 'order' : order}
 	return render(request, 'view_cart.html', context)
 
 
@@ -43,17 +44,17 @@ def add_to_cart(request, id):
 			order_item.quantity += 1
 			order_item.save()
 			messages.info(request, "This item has been updated in your cart!")
-			return redirect(reverse('index'))
+			return redirect(reverse('my_cart'))
 		else:
 			order.items.add(order_item)
 			messages.info(request, "This item has been added to your cart!")
-			return redirect(reverse('index'))
+			return redirect(reverse('my_cart'))
 	else:
 		date = timezone.now()
 		order = Order.objects.create(user=request.user, ordered_date=date)
 		order.items.add(order_item)
 		messages.info(request, "This item has been added to your cart!")
-		return redirect(reverse('index'))
+		return redirect(reverse('my_cart'))
 
 def remove_from_cart(request, id):
 	item = get_object_or_404(Item, id=id)
@@ -67,14 +68,25 @@ def remove_from_cart(request, id):
 				order_item.save()
 			else:
 				order.items.remove(order_item)
+				order_item.delete()
 			messages.info(request, "This item has been removed from your cart!")
-			return redirect(reverse('index'))
+			return redirect(reverse('my_cart'))
 		else:
 			messages.info(request, "This item was not in your cart!")
-			return redirect(reverse('index'))
+			return redirect(reverse('my_cart'))
 	else:
 		messages.info(request, "You do not have an active order!")
-		return redirect(reverse('index'))
+		return redirect(reverse('my_cart'))
+
+#Work ON REWORKING!!!!!!!!!!!!!!!!!!!!!!!!!
+def delete_from_cart(request, id):
+	item = get_object_or_404(Item, id=id)
+	order = Order.objects.filter(user=request.user, ordered=False)[0]
+	order_item = OrderItem.objects.filter(item=item, user=request.user, ordered=False)[0]
+	order.items.remove(order_item)
+	order_item.delete()
+	messages.info(request, "This item was removed from your cart.")
+	return redirect(reverse('my_cart'))
 
 
 

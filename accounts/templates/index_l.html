@@ -52,7 +52,7 @@
                            </h4>
                            <h5>{{item.price}}</h5>
                            <p class="card-text"><b>Posted by:</b> {{item.owner}} <br> <b>Description:</b> {{item.descrip}} </p>
-                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtocart"> Details</button>
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test{{item.id}}"> Details</button>
                         </div>
                         <div class="card-footer">
                            <small class="text-muted">Inventory: {{item.inv_count}} </small>
@@ -60,11 +60,11 @@
                      </div>
                   </div>
                   <!--Pop-up add to cart execution-->
-                  <div class="modal fade right" id="addtocart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+                  <div class="modal fade right" id="test{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
                      <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
                         <div class="modal-content">
                            <div class="modal-header">
-                              <a class="heading"><b>Add to Cart</b></a>
+                              <b>Add to Cart</b>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" class="white-text">&times;</span>
                               </button>
