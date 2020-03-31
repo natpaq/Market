@@ -57,7 +57,8 @@ def do_login(request):
                     return HttpResponseRedirect(request.GET['next'])
                 return HttpResponseRedirect(reverse('index'))
             else:
-                form.add_error(None, 'Unable to log in')
+                ########## Not Working #############
+                form.add_error('password', 'Username-Password combination is invalid!')
         context['form'] = form
     return render(request, 'login.html', context)
 

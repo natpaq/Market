@@ -18,7 +18,7 @@ def add_item(request):
 	      item = form.save(commit=False)
 	      item.owner = request.user
 	      item.save()
-	      return HttpResponseRedirect(reverse('index')) 	
+	      return HttpResponseRedirect(reverse('my_items')) 	
 	   context['form'] = form
 	return render(request, 'list_item.html', context)
 
@@ -28,10 +28,14 @@ def my_items(request):
 	return render(request, 'my_items.html', context)
 
 def my_cart(request):
-	orderitems = OrderItem.objects.all()
-	order = Order.objects.get(user=request.user)
-	context = {'orderitems' : orderitems, 'order' : order}
-	return render(request, 'view_cart.html', context)
+        orderitems = OrderItem.objects.all()
+        # do not throw an error if cart is empty
+        try:
+           order = Order.objects.get(user=request.user)
+           context = {'orderitems' : orderitems, 'order' : order}
+        except Order.DoesNotExist:
+           context = {}
+        return render(request, 'view_cart.html', context)
 
 
 def add_to_cart(request, id):
@@ -88,6 +92,15 @@ def delete_from_cart(request, id):
 	messages.info(request, "This item was removed from your cart.")
 	return redirect(reverse('my_cart'))
 
+def checkout(request):
+	orderitems = OrderItem.objects.all()
+        # do not throw an error if cart is empty
+	try:
+           order = Order.objects.get(user=request.user)
+           context = {'orderitems' : orderitems, 'order' : order}
+	except Order.DoesNotExist:
+           context = {}
+	return render(request, 'checkout.html', context)
 
 
 
