@@ -1,0 +1,49 @@
+{% extends 'navbar_l.html' %}
+{% block content %}
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>OSS</title>
+      <link href="../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="../../static/css/signup.css" rel="stylesheet">
+   </head>
+   <!-- Form that allows users to list new items up for sale -->
+   <body>
+      <h1>Modify Item Listing</h1>
+      <!-- All of item's previous information is displayed for user to modify, if desired -->
+      <form method="post" action="" enctype="multipart/form-data">
+         {% csrf_token %}
+         <!-- Display previous image to let user decide if they want a new one -->
+         <div>Previous image:</div>
+         <div><img class="img" width=10% height=10% src= {{item.image.url}} alt=""></div> 
+         <div class="form-group">
+            <label>Select a new image:</label>
+            <input type="file" name="image" accept="image/*">
+            {{form.image.errors}}
+         </div>
+         <div class="form-group">
+            <label>Item Name</label>
+            <input type="text" class="form-control" name="itemname" value="{{item.itemname}}">
+            {{form.itemname.errors}}
+         </div>
+         <div class="form-group">
+            <label>Item Description</label><br />
+            <textarea name="descrip" cols="50" rows="10">{{item.descrip}}</textarea><br />
+            {{form.descrip.errors}}
+         </div>
+         <div class="form-group">
+            <label>Asking Price</label>
+            <input type="number" name="price" min="0" step=".01" value="{{item.price}}">
+            {{form.price.errors}}
+         </div>
+         <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" name="inv_count" min="1" step="1" value="{{item.inv_count}}">
+            {{form.inv_count.errors}}
+         </div>
+         <input type="submit" value="Submit"/> 
+      </form>
+   </body>
+</html>
+{% endblock %}
