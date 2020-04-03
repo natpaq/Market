@@ -45,10 +45,14 @@ def add_to_cart(request, id):
 	if order_inital.exists():
 		order = order_inital[0]
 		if order.items.filter(item__id=item.id).exists():
-			order_item.quantity += 1
-			order_item.save()
-			messages.info(request, "This item has been updated in your cart!")
-			return redirect(reverse('my_cart'))
+			if(order_item.quantity + 1 <= order_item.item.inv_count):
+				order_item.quantity += 1
+				order_item.save()
+				messages.info(request, "This item has been updated in your cart!")
+				return redirect(reverse('my_cart'))
+			else:
+				messages.info(request, "The quantity requested for this item exceeds our inventory!")
+				return redirect(reverse('my_cart'))
 		else:
 			order.items.add(order_item)
 			messages.info(request, "This item has been added to your cart!")
