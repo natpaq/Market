@@ -71,7 +71,7 @@ def do_logout(request):
 def item_update(request, id):
     post = get_object_or_404(Item, id=id)
     if request.method == "POST":
-        form = forms.AddItemForm(request.POST, instance=post)
+        form = forms.AddItemForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
@@ -79,5 +79,6 @@ def item_update(request, id):
     else:
         form = forms.AddItemForm(instance=post)
     context = {'form': form}
-    return render(request, "list_item.html", context)
+    context['item'] = post
+    return render(request, "edit_item.html", context)
 
