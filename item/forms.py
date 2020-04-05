@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.views.generic import CreateView
-from .models import Item, OrderItem
+from .models import Item, OrderItem, Address
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
@@ -19,3 +19,14 @@ class OrderItemForm(ModelForm):
 
 	def clean(self):
 		cleaned_data = super(OrderItemForm, self).clean()
+
+class CheckoutForm(forms.Form):
+	street_address = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'ex. Address Lane',
+																				   'class':'form-control'}))
+	city = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'ex. London', 'class':'form-control'}))
+	state = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'ex. Ontario', 'class':'form-control'}))
+	zip = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'ex. Q6R 2I9', 'class':'form-control'}))
+	#contact = forms.CharField(max_length=100, widget=forms.Select(choices=[('none', 'None'),('email', 'E-mail'), ('phone number', 'Phone Number')]))
+
+	def clean(self):
+		cleaned_data = super(CheckoutForm, self).clean()

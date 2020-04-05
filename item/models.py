@@ -41,6 +41,8 @@ class Order(models.Model):
     ordered = models.BooleanField(default=False)
     items = models.ManyToManyField(OrderItem)
     ordered_date = models.DateTimeField()
+    address = models.ForeignKey('Address', on_delete=models.SET_NULL, blank=True, null=True)
+    payment = models.ForeignKey('Payment', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -50,3 +52,25 @@ class Order(models.Model):
         for order_item in self.items.all():
             total += order_item.get_total_item_price()
         return total
+
+class Address(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip = models.CharField(max_length=100)
+    #contact = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.city
+
+class Payment(models.Model):
+    stripe_charge_id = models.CharField(max_length=50)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True)
+    amount = models.FloatField()
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username + self.amount
+
+
