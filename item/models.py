@@ -71,6 +71,6 @@ class Payment(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username + self.amount
+        return self.user.username
 
 
