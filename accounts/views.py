@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 from django.db import IntegrityError
@@ -7,24 +7,26 @@ from django.contrib.auth.models import User
 from . import forms
 from item.models import Item
 from django.shortcuts import get_list_or_404, get_object_or_404
+from django.contrib import messages
 
 from item.forms import OrderItemForm
 from item.models import Item, OrderItem, Order
 from item.views import add_to_cart, remove_from_cart, my_cart, payment
 
+
 def index(request):
-   items1 = Item.objects.all()
-   context = {'items': items1}
-   if request.user.is_authenticated:
-      if request.method == 'POST':
-         form = OrderItemForm(request.POST)
-         if form.is_valid():
-            #order_item = form.save()
-            order_item = OrderItem.objects.create(form.cleaned_data['item'], form.cleaned_data['quantity'])
-            #order_item.save()
-            return HttpResponseRedirect(reverse('index'))
-      return render(request, 'index_l.html', context)
-   return render(request, 'index.html', context)
+    items1 = Item.objects.all()
+    context = {'items': items1}
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = OrderItemForm(request.POST)
+            if form.is_valid():
+                # order_item = form.save()
+                order_item = OrderItem.objects.create(form.cleaned_data['item'], form.cleaned_data['quantity'])
+                # order_item.save()
+                return HttpResponseRedirect(reverse('index'))
+        return render(request, 'index_l.html', context)
+    return render(request, 'index.html', context)
 
 
 def signup(request):
@@ -82,3 +84,9 @@ def item_update(request, id):
     context['item'] = post
     return render(request, "edit_item.html", context)
 
+
+def item_delete(request, id):
+    post = get_object_or_404(Item, id=id)
+    post.delete()
+    messages.info(request, "This item has been deleted!")
+    return redirect(reverse("index"))

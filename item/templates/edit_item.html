@@ -43,6 +43,7 @@
             {{form.inv_count.errors}}
          </div>
          <input type="submit" value="Submit"/> 
+         <a class="nav-link" href="{% url 'item_delete' id=item.id %}">DELETE ITEM</a>
       </form>
    </body>
 </html>

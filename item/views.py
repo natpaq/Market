@@ -35,7 +35,7 @@ def my_cart(request):
     orderitems = OrderItem.objects.all()
     # do not throw an error if cart is empty
     try:
-        order = Order.objects.get(user=request.user)
+        order = Order.objects.get(user=request.user, ordered=False)
         context = {'orderitems': orderitems, 'order': order}
     except Order.DoesNotExist:
         context = {}
@@ -48,7 +48,7 @@ def add_to_cart(request, id):
     order_inital = Order.objects.filter(user=request.user, ordered=False)
     if order_inital.exists():
         order = order_inital[0]
-        if order.items.filter(item__id=item.id).exists():
+        if order.items.filter(item__id=item.id, ordered=False).exists():
             if order_item.quantity + 1 <= order_item.item.inv_count:
                 order_item.quantity += 1
                 order_item.save()
@@ -106,7 +106,7 @@ def checkout(request):
     orderitems = OrderItem.objects.all()
     # do not throw an error if cart is empty
     try:
-        order = Order.objects.get(user=request.user)
+        order = Order.objects.get(user=request.user, ordered=False)
         form = forms.CheckoutForm(request.POST, request.FILES)
         context = {'orderitems': orderitems, 'order': order, 'form': form}
         if request.method == 'POST':
@@ -141,8 +141,9 @@ def payment(request):
         try:
             charge = stripe.Charge.create(
                 amount=amount,
-                currency="usd",
-                source=token,
+                currency="cad",
+                source="tok_amex",
+                description="Charge from OSS"
             )
 
             payment = Payment()
@@ -151,9 +152,14 @@ def payment(request):
             payment.amount = order.get_total()
             payment.save()
 
-            #order_items = order.items.all()
-            #order_items.update(ordered=True)
-            #order_items.save()
+            orderitems = OrderItem.objects.filter(user=request.user, ordered=False)
+            orderitems.update(ordered=True)
+            newOrderitems = OrderItem.objects.filter(user=request.user, ordered=True)
+
+            for orderitem in newOrderitems:
+                orderitem.item.inv_count -= orderitem.quantity
+                orderitem.item.save()
+                orderitem.save()
 
             order.ordered = True
             order.payment = payment
