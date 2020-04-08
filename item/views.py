@@ -10,9 +10,7 @@ from django.contrib import messages
 from . import forms
 
 import stripe
-
 stripe.api_key = "sk_test_PXpYgH0Kyd3yzZeGEYYoPh6800Oav1iiXB"
-
 
 def add_item(request):
     context = {}
@@ -127,7 +125,7 @@ def checkout(request):
                 address.save()
                 order.address = address
                 order.save()
-                return redirect(reverse('payment'))
+                return redirect(reverse(payment))
     except Order.DoesNotExist:
         context = {}
     return render(request, 'checkout.html', context)
@@ -135,12 +133,7 @@ def checkout(request):
 
 def payment(request):
     orderitems = OrderItem.objects.all()
-    try:
-        order = Order.objects.get(user=request.user, ordered=False)
-    except Exception as e:
-        redirect("/")
-        messages.info(request, "You do not have anything in your cart to check out!")
-
+    order = Order.objects.get(user=request.user, ordered=False)
     if request.method == 'POST':
         token = request.POST.get('stripeToken')
         amount = int(order.get_total() * 100)  # cents
@@ -148,9 +141,8 @@ def payment(request):
         try:
             charge = stripe.Charge.create(
                 amount=amount,
-                currency="cad",
-                source="tok_amex",
-                description="My First Test Charge (created for API docs)",
+                currency="usd",
+                source=token,
             )
 
             payment = Payment()
@@ -171,7 +163,6 @@ def payment(request):
             return redirect("/")
 
         except stripe.error.CardError as e:
-            messages.info(request, "hi")
             body = e.json_body
             err = body.get('error', {})
             # Since it's a decline, stripe.error.CardError will be caught
