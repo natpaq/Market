@@ -51,7 +51,7 @@ def add_to_cart(request, id):
     if order_inital.exists():
         order = order_inital[0]
         if order.items.filter(item__id=item.id).exists():
-            if (order_item.quantity + 1 <= order_item.item.inv_count):
+            if order_item.quantity + 1 <= order_item.item.inv_count:
                 order_item.quantity += 1
                 order_item.save()
                 messages.info(request, "This item has been updated in your cart!")
@@ -146,7 +146,6 @@ def payment(request):
         amount = int(order.get_total() * 100)  # cents
 
         try:
-            #Token not needed?? COME BACK TO. Works for now
             charge = stripe.Charge.create(
                 amount=amount,
                 currency="cad",
@@ -159,6 +158,10 @@ def payment(request):
             payment.user = request.user
             payment.amount = order.get_total()
             payment.save()
+
+            #order_items = order.items.all()
+            #order_items.update(ordered=True)
+            #order_items.save()
 
             order.ordered = True
             order.payment = payment
