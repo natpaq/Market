@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,6 +124,20 @@ USE_TZ = True
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+ASGI_APPLICATION = "django_websocket.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+            #"hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+        },
+    },
+}
+
+LOGIN_URL = '/account/login'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'

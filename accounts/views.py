@@ -9,7 +9,8 @@ from item.models import Item
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 from item.forms import OrderItemForm
-from item.models import Item, OrderItem
+from item.models import Item, OrderItem, Order
+from item.views import add_to_cart, remove_from_cart, my_cart
 
 def index(request):
    items1 = Item.objects.all()
@@ -56,7 +57,8 @@ def do_login(request):
                     return HttpResponseRedirect(request.GET['next'])
                 return HttpResponseRedirect(reverse('index'))
             else:
-                form.add_error(None, 'Unable to log in')
+                ########## Not Working #############
+                form.add_error('password', 'Username-Password combination is invalid!')
         context['form'] = form
     return render(request, 'login.html', context)
 
@@ -73,7 +75,7 @@ def item_update(request, id):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('my_items'))
     else:
         form = forms.AddItemForm(instance=post)
     context = {'form': form}

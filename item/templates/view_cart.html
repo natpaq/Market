@@ -1,0 +1,98 @@
+{% extends 'navbar_l.html' %}
+{% block content %}
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="author" content="Aidan Wadin">
+      <meta name="description" content="Marketplace for COMP 307 Final Project">
+      <title>OSS</title>
+      <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="static/css/shop-homepage.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+   </head>
+   <body>
+      <div clas="mt-5">
+         {% if messages %}
+            {% for message in messages %}
+               <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+            {% endfor %}
+         {% endif %}
+      </div>
+      <!-- Display user options -->
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <h1 class="my-4">The One Stop Shop</h1>
+               <div class="list-group">
+                  <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
+                  <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</a>
+                  <a href="{% url 'my_items' %}" class="list-group-item">View your listed items</a>
+                  <a href="{% url 'index' %}" class="list-group-item">Return to marketplace</a>
+               </div>
+            </div>
+            <div class="col-lg-9">
+               <div class="banner">
+                  <h1 class="display-4">{{request.user.username}}'s Cart Contents:</h1>
+               </div>
+               <div class="row">
+                  <table class="table" border="1">
+                     <thead class="thead-dark">
+                        <tr>
+                           <th scope="col">Item</th>
+                           <th scope="col"></th>
+                           <th scope="col">Quantity</th>
+                           <th scope="col">Price</th>
+                        </tr>
+                     </thead>
+                     <!-- Display contents of User's cart -->
+                     {% for orderitem in orderitems %}
+                     {% if orderitem.user == request.user %}
+                     {% if orderitem.ordered == False %}     
+                     <tr>
+                        <td>{{ orderitem.item.itemname }}</td>
+                        <td>
+                           <p><img class="img" width=40% height=40% src= {{orderitem.item.image.url}} alt=""></p>
+                        </td>
+                        <td class="amount">
+                           <a class="text-danger" href="{% url 'remove_from_cart' orderitem.item.id %}"><i class="fas fa-minus mr-2"></i></a>
+                           {{ orderitem.quantity }}
+                           <a class="text-success" href="{% url 'add_to_cart' orderitem.item.id %}"><i class="fas fa-plus ml-2"></i></a>
+                           <a class="text-secondary"href="{% url 'delete_from_cart' orderitem.item.id %}"><i class="fas fa-trash-alt ml-4"></i></a>
+                        </td>
+                        <td class="price">{{ orderitem.get_total_item_price }}</td>
+                     </tr>
+                     {% endif %}      
+                     {% endif %}
+                     {% endfor %}
+                     <tr>
+                        <td colspan="3"><strong> Order Total: </strong> </td>
+                        <td> <strong>${{order.get_total}}</strong></td>
+                     </tr>
+                     <tr>
+                        <td colspan="5">
+                           <a class="btn btn-dark float-right ml-2" href="{% url 'checkout' %}">Proceed to Checkout</a>
+                           <a class="btn btn-primary float-right" href="{% url 'index' %}">Return to Marketplace</a>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <footer class="py-5 bg-dark">
+         <div class="navbar fixed-bottom">
+         </div>
+      </footer>
+      <!-- Bootstrap core JavaScript -->
+      <script src="static/vendor/jquery/jquery.min.js"></script>
+      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   </body>
+</html>
+{% endblock %}

@@ -117,12 +117,13 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Ima
+ges)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 
-ASGI_APPLICATION = "django_websocket.routing.application"
+ASGI_APPLICATION = "project.routing.application"
 
 CHANNEL_LAYERS = {
     'default': {
