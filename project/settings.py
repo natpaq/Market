@@ -125,7 +125,7 @@ USE_TZ = True
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL = '/media/'
 
-ASGI_APPLICATION = "django_websocket.routing.application"
+ASGI_APPLICATION = "project.routing.application"
 
 CHANNEL_LAYERS = {
     'default': {
