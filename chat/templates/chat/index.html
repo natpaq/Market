@@ -1,45 +1,27 @@
+<!-- chat/templates/chat/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-<!--     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <meta name="author" content="_">
-    <meta name="description" content="Marketplace for COMP 307 Final Project"> -->
-    <title>Enter Chat Room</title>
-<!--     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/chat-index.css" rel="stylesheet"> -->
-    <!-- Font Awesome -->
-<!--     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> -->
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
 </head>
 <body>
-    <p>
-    <a href="{% url 'index' %}">Home</a>
-    <a href="{% url 'signup' %}">Signup</a>
-    <a href="{% url 'login' %}">Login</a>
-    <a href="{% url 'logout' %}">Logout</a>
-    </p>
-
     What chat room would you like to enter?<br/>
     <input id="room-name-input" type="text" size="100"/><br/>
     <input id="room-name-submit" type="button" value="Enter"/>
 
     <script>
-        document.getElementById('room-name-input').focus();
-        document.getElementById('room-name-input').onkeyup = function(e) {
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
-                document.getElementById('room-name-submit').click();
+                document.querySelector('#room-name-submit').click();
             }
         };
 
-        document.getElementById('room-name-submit').onclick = function(e) {
-            var roomName = document.getElementById('room-name-input').value;
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
             window.location.pathname = '/chat/' + roomName + '/';
         };
     </script>
-    <!-- Bootstrap core JavaScript -->
-<!--     <script src="static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 </body>
 </html>
