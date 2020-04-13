@@ -1,0 +1,45 @@
+<!-- chat/templates/chat/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+    <link href="/static/submit.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body class="bg-for-submit-name">
+    <div class="container">
+        <div class="row"></div>
+        <div class="row margin-top">
+            <div class="col-md-12">
+                <div class="wrap">
+                    <p class="form-title Arabella">
+                    What chat room would you like to enter?
+                    </p>
+                    <form class="login"></form>
+                        <input id="room-name-input" size="119" type="text" placeholder="type here"/>
+                        <button type= "submit" input id="room-name-submit" value="Enter" class="btn btn-success">ENTER</button>
+                    </form>       
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            window.location.pathname = '/chat/' + roomName + '/';
+        };
+    </script>
+</body>
+</html>
