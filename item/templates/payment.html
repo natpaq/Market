@@ -1,0 +1,193 @@
+{% extends 'navbar_l.html' %}
+{% block content %}
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="author" content="Aidan Wadin">
+      <meta name="description" content="Marketplace for COMP 307 Final Project">
+      <title>OSS</title>
+      <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="static/css/shop-homepage.css" rel="stylesheet">
+      <link href="../static/css/payment.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+   </head>
+   <body>
+      <div clas="mt-5">
+         {% if messages %}
+            {% for message in messages %}
+               <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+            {% endfor %}
+         {% endif %}
+      </div>
+      <!-- Display user options -->
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <h1 class="my-4">The One Stop Shop</h1>
+               <div class="list-group">
+                  <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
+                  <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</a>
+                  <a href="{% url 'my_items' %}" class="list-group-item">View your listed items</a>
+                  <a href="{% url 'index' %}" class="list-group-item">Return to marketplace</a>
+               </div>
+            </div>
+            <div class="col-lg-9">
+               <div class="banner">
+                  <h1 class="display-5">Complete Your Order</h1>
+               </div>
+               <div class="row">
+                  <table class="table" border="1">
+                     <thead class="thead-dark">
+                        <tr>
+                           <th scope="col">Item</th>
+                           <th scope="col">Quantity</th>
+                           <th scope="col">Price</th>
+                        </tr>
+                     </thead>
+                     <!-- Display contents of User's cart -->
+                     {% for orderitem in orderitems %}
+                     {% if orderitem.user == request.user %}
+                     {% if orderitem.ordered == False %}     
+                     <tr>
+                        <td>{{ orderitem.item.itemname }}</td>
+                        <td class="amount">{{ orderitem.quantity }}</td>
+                        <td class="price">{{ orderitem.get_total_item_price }}</td>
+                     </tr>
+                     {% endif %}      
+                     {% endif %}
+                     {% endfor %}
+                     <tr>
+                        <td colspan="2"><strong> Order Total: </strong> </td>
+                        <td> <strong>${{order.get_total}}</strong></td>
+                     </tr>
+                  </table>
+               </div>
+               <!-- Get User's Payment Info -->
+               <div class="row">
+                  <h2>Payment Method</h2>
+               </div>
+               <h4>Accepted Cards:</h4>
+               <div class="mb-4">
+                  <i class="fab fa-cc-visa fa-2x" style="color:green;"></i>
+                  <i class="fab fa-cc-amex fa-2x" style="color:blue;"></i>
+                  <i class="fab fa-cc-discover fa-2x" style="color:orange;"></i>
+                  <i class="fab fa-cc-mastercard fa-2x" style="color:red;"></i>
+               </div>
+                  <div>
+                    <form method="post" id="stripe-form">
+                    {% csrf_token %}
+                      <div class="stripe-form-row">
+                        <label for="card-element">
+                          Credit or debit card
+                        </label>
+                        <div id="card-element" class="StripeElement StripeElement--empty"><div class="__PrivateStripeElement" style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"><iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeFrame5" allowpaymentrequest="true" src="https://js.stripe.com/v3/elements-inner-card-51e0a63f433555284925f9663bcb948d.html#style[base][color]=%2332325d&amp;style[base][fontFamily]=%22Helvetica+Neue%22%2C+Helvetica%2C+sans-serif&amp;style[base][fontSmoothing]=antialiased&amp;style[base][fontSize]=16px&amp;style[base][::placeholder][color]=%23aab7c4&amp;style[invalid][color]=%23fa755a&amp;style[invalid][iconColor]=%23fa755a&amp;componentName=card&amp;wait=false&amp;rtl=false&amp;keyMode=test&amp;apiKey=pk_test_TYooMQauvdEDq54NiTphI7jx&amp;origin=https%3A%2F%2Fstripe.com&amp;referrer=https%3A%2F%2Fstripe.com%2Fdocs%2Fstripe-js&amp;controllerId=__privateStripeController1" title="Secure payment input frame" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; height: 19.2px;"></iframe><input class="__PrivateStripeElement-input" aria-hidden="true" aria-label=" " autocomplete="false" maxlength="1" style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"></div></div>
+                  
+                        <!-- Used to display form errors. -->
+                        <div id="card-errors" role="alert"></div>
+                      </div>
+                  
+                      <button class="btn btn-dark float-right ml-2 mt-5">Submit Payment</button>
+                    </form>
+                     <iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeController1" allowpaymentrequest="true" src="https://js.stripe.com/v3/controller-468bd62002596e10e873d190027981dd.html#apiKey=pk_test_TYooMQauvdEDq54NiTphI7jx&amp;stripeJsId=1af36c3c-ba7a-45cd-9038-915fa0e64652&amp;startTime=625.6349999457598&amp;origin=https%3A%2F%2Fstripe.com&amp;referrer=https%3A%2F%2Fstripe.com%2Fdocs%2Fstripe-js&amp;controllerId=__privateStripeController1" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe>
+                  
+                    <iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeMetricsController0" allowpaymentrequest="true" src="https://js.stripe.com/v3/m-outer-a0f6c1465b8d9aab778cf2913d1d3c86.html#url=https%3A%2F%2Fstripe.com%2Fdocs%2Fstripe-js&amp;title=&amp;referrer=&amp;muid=84c33a48-c0c5-47e2-9664-0e75a8c2b0a4&amp;sid=f0c144f6-3554-49b2-836a-9283e2eb31c0&amp;preview=true" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe></body>
+                  </div>
+                  </br></br>
+               </div>
+                </div>
+            </br></br>
+                </div>
+            </br></br>
+            </div>
+         </div>
+      </div>
+      <footer class="py-5 bg-dark">
+         <div class="navbar fixed-bottom">
+         </div>
+      </footer>
+      <!-- Bootstrap core JavaScript NEEDED??????-->
+      <script src="static/vendor/jquery/jquery.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script>
+         // Create a Stripe client.
+        var stripe = Stripe('pk_test_NGYSWgRtxGu15l4Vys5RrE8K00bHuOp98z');
+
+        // Create an instance of Elements.
+        var elements = stripe.elements();
+
+        // Custom styling can be passed to options when creating an Element.
+        // (Note that this demo uses a wider set of styles than the guide below.)
+        var style = {
+        base: {
+            color: '#32325d',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+            color: '#aab7c4'
+            } 
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+        };
+
+        // Create an instance of the card Element.
+        var card = elements.create('card', {style: style});
+
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function(event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+        });
+
+        // Handle form submission.
+        var form = document.getElementById('stripe-form');
+        form.addEventListener('submit', function(event) {
+         event.preventDefault();
+
+         stripe.createToken(card).then(function(result) {
+               if (result.error) {
+                  // Inform the user if there was an error.
+                  var errorElement = document.getElementById('card-errors');
+                  errorElement.textContent = result.error.message;
+               } else {
+                  // Send the token to your server.
+                  stripeTokenHandler(result.token);
+               }
+         });
+        });
+
+        // Submit the form with the token ID.
+        function stripeTokenHandler(token) {
+        // Insert the token ID into the form so it gets submitted to the server
+        var form = document.getElementById('stripe-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+
+        // Submit the form
+        form.submit();
+        }
+      </script>
+   </body>
+</html>
+{% endblock %}
