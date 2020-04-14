@@ -1,22 +1,50 @@
 {% extends 'navbar.html' %}
 {% block content %}
 <!-- User login form -->
-<body>
-   <h1>Login</h1>
-   <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-   <link href="static/css/signup.css" rel="stylesheet">
-   <form method="post" action="">
-      {% csrf_token %}
-      <div class="form-group">
-         <label>Username</label>
-         <input type="text" class="form-control" name="username">
+<html>
+   <head>
+      <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="static/css/signup.css" rel="stylesheet">
+   </head>
+   <body>
+      <!-- Display user options -->
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <h1 class="my-4">The One Stop Shop</h1>
+               <div class="list-group">
+                  <p class="list-group-item">Log in now to start shopping!</p>
+                  <a href="{% url 'signup' %}" class="list-group-item">Create an account</a>
+                  <a href="{% url 'index' %}" class="list-group-item">Return to marketplace</a>
+               </div>
+            </div>
+            <div class="col-lg-9">
+               <div class="banner">
+                  <h1 class="display-5">Login</h1>
+               </div>
+               <form method="post" action="">
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <label>Username</label>
+                     <input type="text" class="form-control" name="username"/>
+                     {{ form.username.errors }}
+                  </div>
+                  <div class="form-group">
+                     <label>Password</label>
+                     <input type="password" class="form-control" name="password"/>
+                     {{ form.password.errors }}
+                  </div>
+                  <input class="btn btn-primary" type="submit" value="Complete login"/>
+               </form>
+            </div>
+         </div>
       </div>
-      <div class="form-group">
-         <label>Password</label>
-         <input type="password" class="form-control" name="password">
-      </div>
-      <input type="submit"/>
-   </form>
-</body>
+   </body>
+   </br>
+   <footer class="py-5 bg-dark">
+      <div class="navbar fixed-bottom"></div>
+   </footer>
+</html>
 {% endblock %}
+
 

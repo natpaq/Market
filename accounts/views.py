@@ -5,7 +5,6 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from . import forms
-from item.models import Item
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib import messages
 
@@ -59,8 +58,7 @@ def do_login(request):
                     return HttpResponseRedirect(request.GET['next'])
                 return HttpResponseRedirect(reverse('index'))
             else:
-                ########## Not Working #############
-                form.add_error('password', 'Username-Password combination is invalid!')
+                form.add_error('password', 'Username and password combination is invalid!')
         context['form'] = form
     return render(request, 'login.html', context)
 
