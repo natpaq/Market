@@ -10,36 +10,58 @@
    </head>
    <!-- Form that allows users to list new items up for sale -->
    <body>
-      <h1>List An Item For Sale</h1>
-      <form method="post" action="" enctype="multipart/form-data">
-         {% csrf_token %}
-         <div class="form-group">
-            <label>Select an image:</label>
-            <input type="file" name="image" accept="image/*">
-            {{form.image.errors}}
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <h1 class="my-4">The One Stop Shop</h1>
+               <div class="list-group">
+                  <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
+                  <a href="{% url 'my_items' %}" class="list-group-item">View your listed items</a>
+                  <a href="{% url 'index' %}" class="list-group-item">Return to marketplace</a>
+               </div>
+            </div>
+            <div class="col-lg-9">
+               <div class="banner">
+                  <h1>List An Item For Sale</h1>
+               </div>
+               <form method="post" action="" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <label>Select an image:</label>
+                
+                     <input type="file" name="image" accept="image/*"/>
+                     {{form.image.errors}}
+                  </div>
+                  <div class="form-group">
+                     <label>Item Name</label>
+                     <input type="text" class="form-control" name="itemname"/>
+                     {{form.itemname.errors}}
+                  </div>
+                  <div class="form-group">
+                     <label>Item Description</label><br />
+                     <textarea name="descrip" cols="50" rows="10"></textarea><br />
+                     {{form.descrip.errors}}
+                  </div>
+                  <div class="form-group">
+                     <label>Asking Price</label>
+                     <input type="number" name="price" min="0" value="0" step=".01"/>
+                     {{form.price.errors}}
+                  </div>
+                  <div class="form-group">
+                     <label>Quantity</label>
+                     <input type="number" name="inv_count" min="1" value="1" step="1"/>
+                     {{form.inv_count.errors}}
+                  </div>
+                  <input class="btn btn-primary" type="submit" value="Submit"/>
+               </form>
+            </div>
          </div>
-         <div class="form-group">
-            <label>Item Name</label>
-            <input type="text" class="form-control" name="itemname">
-            {{form.itemname.errors}}
+      </div>
+      </br>
+      <footer class="py-5 bg-dark">
+         <div class="navbar fixed-bottom">
          </div>
-         <div class="form-group">
-            <label>Item Description</label><br />
-            <textarea name="descrip" cols="50" rows="10"></textarea><br />
-            {{form.descrip.errors}}
-         </div>
-         <div class="form-group">
-            <label>Asking Price</label>
-            <input type="number" name="price" min="0" value="0" step=".01">
-            {{form.price.errors}}
-         </div>
-         <div class="form-group">
-            <label>Quantity</label>
-            <input type="number" name="inv_count" min="1" value="1" step="1">
-            {{form.inv_count.errors}}
-         </div>
-         <input type="submit" value="Submit"/>
-      </form>
+      </footer>
    </body>
 </html>
 {% endblock %}
