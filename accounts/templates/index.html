@@ -29,6 +29,7 @@
                <div class="row">
                   <!-- Display all items that are currently posted, but user cannot start shopping until they are logged in -->
                   {% for item in items %}
+                  {% if item.inv_count != 0 %}
                   <div class="col-lg-4 col-md-6 mb-4">
                      <div class="card h-100">
                         <p><img class="card-img-top" src= {{item.image.url}} alt=""></p>
@@ -44,6 +45,7 @@
                         </div>
                      </div>
                   </div>
+                  {% endif %}
                   {% endfor %}
                </div>
             </div>

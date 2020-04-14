@@ -43,6 +43,7 @@
                   <!-- Display only items posted by other users since those are the items the instance user can purchase -->
                   {% for item in items %}
                   {% if item.owner != request.user %}
+                  {% if item.inv_count != 0 %}
                   <div class="col-lg-4 col-md-6 mb-4">
                      <div class="card h-100">
                         <p><img class="card-img-top" src= {{item.image.url}} alt=""></p>
@@ -80,6 +81,7 @@
                         </div>
                      </div>
                   </div>
+                  {% endif %}
                   {% endif %}
                   {% endfor %}
                </div>
