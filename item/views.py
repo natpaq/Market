@@ -27,8 +27,12 @@ def add_item(request):
 
 def my_items(request):
     items1 = Item.objects.all()
+    items = Item.objects.filter(owner=request.user)
     context = {'items': items1}
-    return render(request, 'my_items.html', context)
+    if (items):
+       return render(request, 'my_items.html', context)
+    else:
+       return render(request, 'no_listed_items.html', context)
 
 
 def my_cart(request):
@@ -115,6 +119,7 @@ def checkout(request):
                 state = form.cleaned_data.get('state')
                 city = form.cleaned_data.get('city')
                 zip = form.cleaned_data.get('zip')
+                #contact = form.cleaned_data.get('contact')
                 address = Address(
                     user=request.user,
                     street_address=street_address,
@@ -128,6 +133,8 @@ def checkout(request):
                 return redirect(reverse(payment))
     except Order.DoesNotExist:
         context = {}
+        return render(request, 'checkout_empty.html', context)
+        
     return render(request, 'checkout.html', context)
 
 

@@ -59,7 +59,7 @@ class Address(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     zip = models.CharField(max_length=100)
-    #contact = models.CharField(max_length=100)
+   # contact = models.CharField(max_length=100)
 
     def __str__(self):
         return self.city

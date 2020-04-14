@@ -48,7 +48,7 @@
                         <td class="price">{{ orderitem.get_total_item_price }}</td>
                      </tr>
                      {% endif %}      
-                     {% endif %}
+                     {% endif %} 
                      {% endfor %}
                      <tr>
                         <td colspan="2"><strong> Order Total: </strong> </td>
@@ -65,67 +65,33 @@
                      {% csrf_token %}
                      <div class="form-group">
                         <label>Street Address</label>
-                        <!-- <input type="text" class="form-control" id="shipaddr" name="shipaddr" placeholder="Ex: 123 Address Lane"> -->
                         {{form.street_address}}
-                     </div>  
+                     </div>
                      <div class="form-group">
                         <label>City</label>
-                        <!-- <input type="text" class="form-control" id="shipcity" name="shipcity" placeholder="Ex: London"> -->
                         {{form.city}}
-                     </div>   
+                     </div>
                      <div class="form-group">
                         <label>State/Province/Region</label>
-                        <!-- <input type="text" class="form-control" id="shipregion" name="shipregion" placeholder="Ex: Ontario"> -->
                         {{form.state}}
-                     </div> 
+                     </div>
                      <div class="form-group">
                         <label>Postal Code/ZIP</label>
-                        <!-- <input type="text" class="form-control" id="shippost" name="shippost" placeholder="Ex: Q6R 2I9"> -->
                         {{form.zip}}
-                     </div> 
-                     <!-- <div class="form-group">
+                     </div>
+                     <!--   <div class="form-group">
                         <label>Preferred Contact Method</label>
                         <small></br>Please enter information for one of the following:</small>
                         <select id="contact">
-                        <option value="" selected>None</option>
-                        <option value="email">Email Address</option>
+                        <option value="email" selected>Email Address</option>
                         <option value="phone">Phone Number</option>
                         </select>
-                        <input type="text" class="options" name="email" id="email" style="display:none">
-                        <input type="text" class="options" name="phone" id="phone" style="display:none">
-                     </div> -->
+                        {{form.contact}}
+                        </div> -->
                      <button type="submit" class="btn btn-dark">Submit</button>
+                     </br></br>
                   </form>
                </div>
-               <!-- Get User's Billing Information -->
-               <!-- <div class="row">
-                  <h2>Billing Address</h2>
-               </div>
-               <label>Same as Shipping Address</label>
-               <input type="checkbox" id ="check" value="check" onchange="sameAddress(this)">
-               <div>
-                  <form method ="post" action="" id="bill">
-                     {% csrf_token %}
-                     <div class="form-group">
-                        <label>Street Address</label>
-                        <input type="text" class="form-control" id="billaddr" name="billaddr">
-                     </div>  
-                     <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" id="billcity" name="billcity">
-                     </div>   
-                     <div class="form-group">
-                        <label>State/Province/Region</label>
-                        <input type="text" class="form-control" id="billregion" name="billregion">
-                     </div> 
-                     <div class="form-group">
-                        <label>Postal Code/ZIP</label>
-                        <input type="text" class="form-control" id="billpost" name="billpost">
-                     </div> 
-                  </form>
-               </div> -->
-            </div>
-            </br></br>
             </div>
          </div>
       </div>
@@ -133,9 +99,6 @@
          <div class="navbar fixed-bottom">
          </div>
       </footer>
-      <!-- Bootstrap core JavaScript NEEDED??????-->
-      <script src="static/vendor/jquery/jquery.min.js"></script>
-      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
    </body>
 </html>
 {% endblock %}

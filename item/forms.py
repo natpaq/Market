@@ -26,7 +26,7 @@ class CheckoutForm(forms.Form):
 	city = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'ex. London', 'class':'form-control'}))
 	state = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'ex. Ontario', 'class':'form-control'}))
 	zip = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'ex. Q6R 2I9', 'class':'form-control'}))
-	#contact = forms.CharField(max_length=100, widget=forms.Select(choices=[('none', 'None'),('email', 'E-mail'), ('phone number', 'Phone Number')]))
+	#contact = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': ' ', 'class':'form-control'}))
 
 	def clean(self):
 		cleaned_data = super(CheckoutForm, self).clean()
