@@ -213,24 +213,5 @@
       messageInputDom.value = '';
   };
 
-  
-  function createMessage(data) {
-      var author = data['author'];
-      var msgListTag = document.createElement('li');
-      var imgTag = document.createElement('img');
-      var pTag = document.createElement('p');
-      pTag.textContent = data.content;
-      imgTag.src = 'https://storage.needpix.com/rsynced_images/avatar-159236_1280.png';
-      
-      if (author === username) {
-        msgListTag.className = 'replies';
-      } else {
-        msgListTag.className = 'sent';
-      }
-      msgListTag.appendChild(imgTag);
-      msgListTag.appendChild(pTag);
-      document.querySelector('#chat-log').appendChild(msgListTag);
-    }
- 
 </script> 
 </html>
