@@ -52,7 +52,7 @@ def add_to_cart(request, id):
     order_inital = Order.objects.filter(user=request.user, ordered=False)
     if order_inital.exists():
         order = order_inital[0]
-        if order.items.filter(item__id=item.id, ordered=False).exists():
+        if order.items.filter(item__id=item.id).exists():
             if order_item.quantity + 1 <= order_item.item.inv_count:
                 order_item.quantity += 1
                 order_item.save()
@@ -203,9 +203,9 @@ def payment(request):
             # yourself an email
             messages.info(request, "Something Went Wrong. You were not charged, please try again.")
 
-        except Exception as e:
+        #except Exception as e:
             # Something else happened, completely unrelated to Stripe
-            messages.info(request, "A serious error occured, this will be solved shortly.")
+            #messages.info(request, "A serious error occured, this will be solved shortly.")
 
     context = {'orderitems': orderitems, 'order': order}
     return render(request, 'payment.html', context)
