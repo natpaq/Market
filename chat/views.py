@@ -43,7 +43,7 @@ def room(request, room_name):
         # i in string.ascii_letters + string.digits + '-.' for i in room_name:
         #     i_val = True
         #if form.is_valid() and room_name != ' ':
-        if form.is_valid() and room_name != ' ':
+        if room_name != ' ':
             return render(request, 'chat/room.html', {'room_name': room_name})
         # else:
         #   return redirect("index")
