@@ -16,6 +16,7 @@
 from django.shortcuts import render, redirect
 from . import forms
 from chat.forms import RoomForm
+import string
 
 
 def index(request):
@@ -27,17 +28,29 @@ def room(request, room_name):
     if request.method == 'GET':
         form = forms.RoomForm(request.GET or None)
         #if not form.fields[room_name]:
-        #if room_name is None:
-        if form.is_valid():
+        # print(room_name)
+        # print(form.is_valid())
+        # print(form)
+        # print(form.errors)
+        # print(request.GET)
+        #if not room_name:
+        #if form.is_valid():
             #form.save()
-        #if not context['room_name']:
-    #return render(request, 'chat/index.html', {'form': form})
+            #if not context['room_name']:
+         #return render(request, 'chat/index.html', {'form': form})
+            #print(room_name)
+        # i_val = False
+        # i in string.ascii_letters + string.digits + '-.' for i in room_name:
+        #     i_val = True
+        #if form.is_valid() and room_name != ' ':
+        if form.is_valid() and room_name != ' ':
             return render(request, 'chat/room.html', {'room_name': room_name})
         # else:
         #   return redirect("index")
         #    return render(request, 'chat/index.html', {})
-    else:
-        return redirect("index")
+        else:
+            #print(form.errors)
+            return redirect("index")
         #return render(request, 'chat/index.html', {})
     #return render(request, 'chat/room.html', {'room_name': room_name})
     
