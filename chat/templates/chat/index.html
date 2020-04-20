@@ -18,12 +18,14 @@
                     <p class="form-title Arabella">
                     What chat room would you like to enter?
                     </p>
-                    <form class="needs-validation" method="get" action="" novalidate></form>
+                    <form class="login"></form>
                         {% csrf_token %}
-                        <input id="room-name-input" size="119" type="text" name = "room_name" placeholder="type here" required/>
-                        {{ form.room_name }}
+                        <input id="room-name-input" size="119" type="text" placeholder="type here" 
+                        maxlength="100" required/>
+                        {{ form }}
                         <input type= "submit" input id="room-name-submit" value="Enter" class="btn btn-success"
-                        placeholder="type here" required>ENTER</button>
+                        placeholder="type here" maxlength="100" 
+                        required>ENTER</button>
                     </form>       
                 </div>
             </div>

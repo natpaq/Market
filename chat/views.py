@@ -13,6 +13,16 @@
 #         'username': mark_safe(json.dumps(request.user.username)),
 #     })
 
+#from django.shortcuts import render
+#from .forms import RoomForm
+
+#def index(request):
+#    return render(request, 'chat/index.html', {})
+
+#def room(request, room_name=None):
+#    return render(request, 'chat/room.html', {
+#        'room_name': room_name
+#    })
 from django.shortcuts import render, redirect
 from . import forms
 from chat.forms import RoomForm
@@ -39,7 +49,7 @@ def room(request, room_name):
             #if not context['room_name']:
          #return render(request, 'chat/index.html', {'form': form})
             #print(room_name)
-        # i_val = False
+        # bool i_val = False
         # i in string.ascii_letters + string.digits + '-.' for i in room_name:
         #     i_val = True
         #if form.is_valid() and room_name != ' ':
@@ -52,22 +62,5 @@ def room(request, room_name):
             #print(form.errors)
             return redirect("index")
         #return render(request, 'chat/index.html', {})
-    #return render(request, 'chat/room.html', {'room_name': room_name})
+    return render(request, 'chat/room.html', {'room_name': room_name})
     
-
-
-# def index(request):
-#     return render(request, 'chat/index.html', {})
-
-# def room(request, room_name=None):
-#     if request.method == 'POST':
-#         form = forms.RoomForm(request.POST)
-#         if form.is_valid():
-#             if not room:
-#                 form.save
-#                 return render(request, 'chat/room.html', {
-#                     'room_name': room_name
-#                 })
-#     else:
-#         form = RoomForm()
-#         return render(request, 'chat/index.html', {'form': form})  
