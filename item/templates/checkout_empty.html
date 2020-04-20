@@ -30,33 +30,6 @@
                   <h1 class="display-5">Complete Your Order</h1>
                </div>
                <div class="row">
-                  <table class="table" border="1">
-                     <thead class="thead-dark">
-                        <tr>
-                           <th scope="col">Item</th>
-                           <th scope="col">Quantity</th>
-                           <th scope="col">Price</th>
-                        </tr>
-                     </thead>
-                     <!-- Display contents of User's cart -->
-                     {% for orderitem in orderitems %}
-                     {% if orderitem.user == request.user %}
-                     {% if orderitem.ordered == False %}     
-                     <tr>
-                        <td>{{ orderitem.item.itemname }}</td>
-                        <td class="amount">{{ orderitem.quantity }}</td>
-                        <td class="price">{{ orderitem.get_total_item_price }}</td>
-                     </tr>
-                     {% endif %}      
-                     {% endif %} 
-                     {% endfor %}
-                     <tr>
-                        <td colspan="2"><strong> Order Total: </strong> </td>
-                        <td> <strong>${{order.get_total}}</strong></td>
-                     </tr>
-                  </table>
-               </div>
-               <div>
                   <p> You have no items in your cart! </p>
                </div>
             </div>

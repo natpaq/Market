@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Item, OrderItem, Order, Address, Payment
-from django.db.models import When, Case
+from django.db.models import When, Case, Sum
 from django.utils import timezone
 from django.contrib import messages
 from . import forms
