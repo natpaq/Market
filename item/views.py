@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Item, OrderItem, Order, Address, Payment
-from django.db.models import When, Case
+from django.db.models import When, Case, Sum
 from django.utils import timezone
 from django.contrib import messages
 from . import forms
@@ -119,7 +119,6 @@ def checkout(request):
                 state = form.cleaned_data.get('state')
                 city = form.cleaned_data.get('city')
                 zip = form.cleaned_data.get('zip')
-                #contact = form.cleaned_data.get('contact')
                 address = Address(
                     user=request.user,
                     street_address=street_address,
@@ -159,6 +158,7 @@ def payment(request):
             payment.amount = order.get_total()
             payment.save()
 
+            # get all user's current unordered items in cart and set them to be 'ordered'
             orderitems = OrderItem.objects.filter(user=request.user, ordered=False)
             orderitems.update(ordered=True)
             newOrderitems = OrderItem.objects.filter(user=request.user, ordered=True)
@@ -203,9 +203,17 @@ def payment(request):
             # yourself an email
             messages.info(request, "Something Went Wrong. You were not charged, please try again.")
 
-        #except Exception as e:
+        except Exception as e:
             # Something else happened, completely unrelated to Stripe
-            #messages.info(request, "A serious error occured, this will be solved shortly.")
+            messages.info(request, "A serious error occured, this will be solved shortly.")
 
     context = {'orderitems': orderitems, 'order': order}
     return render(request, 'payment.html', context)
+
+def order_history(request):
+    orderitems = OrderItem.objects.all()
+    orders = Order.objects.all().filter(user=request.user, ordered=True)
+    context = {'orderitems': orderitems, 'orders': orders}
+    return render(request, 'order_history.html', context)
+
+

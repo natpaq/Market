@@ -1,0 +1,66 @@
+{% extends 'navbar_l.html' %}
+{% block content %}
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="author" content="Aidan Wadin">
+      <meta name="description" content="Marketplace for COMP 307 Final Project">
+      <title>OSS</title>
+      <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="static/css/shop-homepage.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+   </head>
+   <body>
+      <!-- Display user options -->
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <h1 class="my-4">The One Stop Shop</h1>
+               <div class="list-group">
+                  <p class="list-group-item">Hello {{request.user.username}}, you are logged in</p>
+                  <a href="{% url 'list_item' %}" class="list-group-item">List an item for sale</a>
+                  <a href="{% url 'my_items' %}" class="list-group-item">View your listed items</a>
+                  <a href="{% url 'index' %}" class="list-group-item">Return to marketplace</a>
+               </div>
+            </div>
+            <div class="col-lg-9">
+               <div class="banner">
+                  <h1 class="display-5">{{request.user.username}}'s Order History</h1>
+               </div>
+               <div class="row">
+                 
+                  <table class="table" border="1">
+                     <thead class="thead-dark">
+                        <tr>
+                           <th scope="col">Item</th>
+                           <th scope="col">Quantity</th>
+                           <th scope="col">Amount Payed</th>
+                        </tr>
+                     </thead>
+                     <!-- Display contents of User's cart -->
+                     {% for orderitem in orderitems %}
+                     {% if orderitem.user == request.user %}
+                     {% if orderitem.ordered == True %}     
+                     <tr>
+                        <td>{{ orderitem.item.itemname }}</td>
+                        <td class="amount">{{ orderitem.quantity }}</td>
+                        <td class="price">{{ orderitem.get_total_item_price }}</td>
+                     </tr>
+                     {% endif %}      
+                     {% endif %} 
+                     {% endfor %}
+                  </table>
+               </div>
+        
+            </div>
+         </div>
+      </div>
+      <footer class="py-5 bg-dark">
+         <div class="navbar fixed-bottom">
+         </div>
+      </footer>
+   </body>
+</html>
+{% endblock %}
