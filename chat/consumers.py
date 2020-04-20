@@ -3,8 +3,11 @@ from channels.generic.websocket import WebsocketConsumer
 import json
 from channels.auth import get_user, logout
 from django.contrib.auth.models import User
+#from .models import Message
+# User = get_user_model()
 
 class ChatConsumer(WebsocketConsumer):
+
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
@@ -35,22 +38,23 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         user = self.scope['user']
+
+        message = user.username + ': ' + message
         
-        if user.is_authenticated:
-            message = user.username + ': ' + message
-        else:
-            message = 'Anonymous: ' + message
-        
+#DEBUG
+        #print(user.username)
+        #print(user)
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
+                'author': user.username,
                 'type': 'chat_message',
-                'message': message
+                'message': message,
             }
         )
+        print(user.username)
         
-
     # Receive message from room group
     def chat_message(self, event):
         message = event['message']
