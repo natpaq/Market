@@ -30,7 +30,6 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
-   # order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.quantity} of {self.item.itemname}"
@@ -61,7 +60,6 @@ class Address(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     zip = models.CharField(max_length=100)
-   # contact = models.CharField(max_length=100)
 
     def __str__(self):
         return self.city
