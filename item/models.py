@@ -29,6 +29,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
+   # order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.quantity} of {self.item.itemname}"
@@ -71,5 +72,5 @@ class Payment(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.username + " " + str(self.amount) + " " + str(self.time)
 
