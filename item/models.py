@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 from django.shortcuts import reverse
+from django.db import transaction
 
 
 class Item(models.Model):
@@ -73,4 +74,5 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.user.username + " " + str(self.amount) + " " + str(self.time)
+
 

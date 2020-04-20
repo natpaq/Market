@@ -36,10 +36,10 @@
       </div>
       <div id="contacts">
           <ul>
-            <li class="contact">
+          <li class="contact">
               <div class="wrap">
                 <div class="meta">
-                    <a class="name" href="{% url 'index' %}" style="font-size:25px">See What's For Sale</a>
+                    <a class="name" href="{% url 'index' %}" style="font-size:25px">Change Chat Rooms</a>
                 </div>
               </div>
             </li>
@@ -71,8 +71,20 @@
     <div class="content">
       <div class="contact-profile">
         <img src="https://123visa.ca/wp-content/uploads/2019/01/blank-avatar.png" alt="" />
-        <p>{{ username }}</p>
+        <p>You are in chatroom: {{ room_name }}</p>
       </div>
+      <!-- <textarea id="chat-log" cols="100" rows="47"></textarea><br/> -->
+      <!--<div class="messages">
+        <ul id="chat-log" cols= "100" rows = "47">
+          <li class="sent">
+            <img src="https://123visa.ca/wp-content/uploads/2019/01/blank-avatar.png" alt="" />
+          </li>
+          <li class="replies">
+            <img src="https://storage.needpix.com/rsynced_images/avatar-159236_1280.png" alt="" />
+          </li>
+        </ul>
+      </div> -->
+      
       <div class="messages">
         <ul id="chat-log">
           {% comment %} <li class="sent">
@@ -82,8 +94,8 @@
             <img src="https://storage.needpix.com/rsynced_images/avatar-159236_1280.png" alt="" />
           </li> {% endcomment %}
         </ul>
-      </div>
-      <div class="message-input">
+      </div> 
+      <div class="message-input"> 
         <div class="wrap">
         <input id="chat-message-input" type="text" placeholder="Write your message..." />
         <!-- <i class="fa fa-paperclip attachment" aria-hidden="true"></i> -->
@@ -94,23 +106,25 @@
       </div>
     </div>
   </div>
-
+</body>
 <script src="{% static 'main.js' %}"></script>
 <script src="{% static 'reconnecting-websocket.js' %}"></script>
-<script>
-    var roomName = {{ room_name_json }};
+
+  <!-- <script>
+    var roomName = {{ room_name }};
     var username = {{ username }};
 
-    var chatSocket = new ReconnectingWebSocket(
+    var chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
-
+ 
     chatSocket.onopen = function(e) {
       fetchMessages();
     }
 
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
+        //var message = data['message']; //mew
         if (data['command'] === 'messages') {
           for (let i=0; i<data['messages'].length; i++) {
             createMessage(data['messages'][i]);
@@ -155,16 +169,70 @@
       imgTag.src = 'https://storage.needpix.com/rsynced_images/avatar-159236_1280.png';
       
       if (author === username) {
-        msgListTag.className = 'sent';
-      } else {
         msgListTag.className = 'replies';
+      } else {
+        msgListTag.className = 'sent';
       }
       msgListTag.appendChild(imgTag);
       msgListTag.appendChild(pTag);
       document.querySelector('#chat-log').appendChild(msgListTag);
     }
+</script> -->
+<script>
+   
+  var roomName = "{{ room_name }}";
+  var username = "{{ username }}";
 
-</script>
-</body>
+  var chatSocket = new WebSocket(
+      'ws://' + window.location.host +
+      '/ws/chat/' + roomName + '/');
+//display
+  chatSocket.onmessage = function(e) {
+      var data = JSON.parse(e.data);
+      var message = data['message'];
+      var author = data['author'];
 
+      var msgListTag = document.createElement('li');
+      var imgTag = document.createElement('img');
+      var pTag = document.createElement('p');
+      pTag.textContent = message;
+      imgTag.src = 'https://storage.needpix.com/rsynced_images/avatar-159236_1280.png';
+      
+      console.log(author === username)
+      console.log(author)
+      console.log(username)
+      console.log(data)
+      if (author === username) {
+        msgListTag.className = 'replies';
+      } else {
+        msgListTag.className = 'sent';
+      }
+      msgListTag.appendChild(imgTag);
+      msgListTag.appendChild(pTag);
+      document.querySelector('#chat-log').appendChild(msgListTag);
+
+      //document.getElementById('chat-log').value += (message + '\n');
+  };
+
+  chatSocket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+  };
+
+  document.getElementById('chat-message-input').focus();
+  document.getElementById('chat-message-input').onkeyup = function(e) {
+      if (e.keyCode === 13) {  // enter, return
+          document.getElementById('chat-message-submit').click();
+      }
+  };
+
+  document.getElementById('chat-message-submit').onclick = function(e) {
+      var messageInputDom = document.getElementById('chat-message-input');
+      var message = messageInputDom.value;
+      chatSocket.send(JSON.stringify({
+          'message': message
+      }));
+
+      messageInputDom.value = '';
+  };
+</script> 
 </html>
