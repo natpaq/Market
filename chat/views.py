@@ -34,6 +34,7 @@ import string
 
 def main_chat(request):
     return render(request, 'chat/index.html', {})
+
 @login_required
 def room(request, room_name):
 
@@ -45,6 +46,6 @@ def room(request, room_name):
             'username': request.user.username
             })
 
-        return redirect("main_chat")
+        return redirect('main_chat')
 
     
