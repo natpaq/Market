@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Item, OrderItem, Order, Address, Payment
-from django.db.models import When, Case, Sum
+from django.db.models import When, Case
 from django.utils import timezone
 from django.contrib import messages
 from . import forms
@@ -37,6 +37,11 @@ def my_items(request):
 
 def my_cart(request):
     orderitems = OrderItem.objects.all()
+    # different view for empty cart case
+    orderitems2 = OrderItem.objects.all().filter(user=request.user, ordered=False)
+    if (len(orderitems2) == 0):
+        context = {}
+        return render(request, 'empty_cart.html', context)
     # do not throw an error if cart is empty
     try:
         order = Order.objects.get(user=request.user, ordered=False)
@@ -108,6 +113,11 @@ def delete_from_cart(request, id):
 
 def checkout(request):
     orderitems = OrderItem.objects.all()
+    # check if we have no orderitems currently in our cart
+    orderitems2 = OrderItem.objects.all().filter(user=request.user, ordered=False)
+    if (len(orderitems2) == 0):
+        context = {}
+        return render(request, 'checkout_empty.html', context)
     # do not throw an error if cart is empty
     try:
         order = Order.objects.get(user=request.user, ordered=False)
@@ -213,6 +223,9 @@ def payment(request):
 def order_history(request):
     orderitems = OrderItem.objects.all()
     orders = Order.objects.all().filter(user=request.user, ordered=True)
+    if (len(orders) == 0):
+       context = {}
+       return render(request, 'empty_order_history.html', context)
     context = {'orderitems': orderitems, 'orders': orders}
     return render(request, 'order_history.html', context)
 
