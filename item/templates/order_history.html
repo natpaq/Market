@@ -36,11 +36,11 @@
                         <tr>
                            <th scope="col">Item</th>
                            <th scope="col">Quantity</th>
-                           <th scope="col">Price</th>
+                           <th scope="col">Amount Payed</th>
                         </tr>
                      </thead>
                      <!-- Display contents of User's cart -->
-                     {% for orderitem in orders %}
+                     {% for orderitem in orderitems %}
                      {% if orderitem.user == request.user %}
                      {% if orderitem.ordered == True %}     
                      <tr>
@@ -51,10 +51,6 @@
                      {% endif %}      
                      {% endif %} 
                      {% endfor %}
-                     <tr>
-                        <td colspan="2"><strong> Order Total: </strong> </td>
-                        <td> <strong>${{order.get_total}}</strong></td>
-                     </tr>
                   </table>
                </div>
         
