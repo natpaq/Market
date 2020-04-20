@@ -37,6 +37,7 @@ def my_items(request):
 
 def my_cart(request):
     orderitems = OrderItem.objects.all()
+    # different view for empty cart case
     orderitems2 = OrderItem.objects.all().filter(user=request.user, ordered=False)
     if (len(orderitems2) == 0):
         context = {}
@@ -128,7 +129,6 @@ def checkout(request):
                 state = form.cleaned_data.get('state')
                 city = form.cleaned_data.get('city')
                 zip = form.cleaned_data.get('zip')
-                #contact = form.cleaned_data.get('contact')
                 address = Address(
                     user=request.user,
                     street_address=street_address,
@@ -174,9 +174,7 @@ def payment(request):
             newOrderitems = OrderItem.objects.filter(user=request.user, ordered=True)
 
             for orderitem in newOrderitems:
-            #for orderitem in orderitems:
                 orderitem.item.inv_count -= orderitem.quantity
-                #this is where dert gets an error when trying to pay
                 orderitem.item.save()
                 orderitem.save()
 
@@ -215,9 +213,9 @@ def payment(request):
             # yourself an email
             messages.info(request, "Something Went Wrong. You were not charged, please try again.")
 
-        #except Exception as e:
+        except Exception as e:
             # Something else happened, completely unrelated to Stripe
-            #messages.info(request, "A serious error occured, this will be solved shortly.")
+            messages.info(request, "A serious error occured, this will be solved shortly.")
 
     context = {'orderitems': orderitems, 'order': order}
     return render(request, 'payment.html', context)
