@@ -158,14 +158,14 @@ def payment(request):
             payment.user = request.user
             payment.amount = order.get_total()
             payment.save()
-            
+
             # get all user's current unordered items in cart and set them to be 'ordered'
             orderitems = OrderItem.objects.filter(user=request.user, ordered=False)
             orderitems.update(ordered=True)
-            #newOrderitems = OrderItem.objects.filter(user=request.user, ordered=True)
+            newOrderitems = OrderItem.objects.filter(user=request.user, ordered=True)
 
-            #for orderitem in newOrderitems:
-            for orderitem in orderitems:
+            for orderitem in newOrderitems:
+            #for orderitem in orderitems:
                 orderitem.item.inv_count -= orderitem.quantity
                 #this is where dert gets an error when trying to pay
                 orderitem.item.save()
