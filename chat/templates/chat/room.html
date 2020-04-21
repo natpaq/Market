@@ -115,7 +115,7 @@
   </div>
 </body>
 <script src="{% static 'main.js' %}"></script>
-<script src="{% static 'reconnecting-websocket.js' %}"></script>
+<!-- <script src="{% static 'reconnecting-websocket.js' %}"></script> -->
 
   <!-- <script>
     var roomName = {{ room_name }};
@@ -206,13 +206,13 @@
       imgTag.src = 'https://storage.needpix.com/rsynced_images/avatar-159236_1280.png';
       
       // console.log(author === username)
-      // console.log(author)
-      // console.log(username)
+      console.log(author)
+      console.log(username)
       // console.log(data)
       if (author === username) {
-        msgListTag.className = 'replies';
-      } else {
         msgListTag.className = 'sent';
+      } else {
+        msgListTag.className =  'replies';
       }
       msgListTag.appendChild(imgTag);
       msgListTag.appendChild(pTag);

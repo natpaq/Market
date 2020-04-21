@@ -18,7 +18,7 @@
                     <p class="form-title Arabella">
                     What chat room would you like to enter?
                     </p>
-                    <form class="needs-validation" method="get" action="" novalidate></form>
+                    <form class="needs-validation" name="sForm" onsubmit="return validateForm()" method="get" action="" novalidate></form>
                         {% csrf_token %}
                         <input id="room-name-input" size="119" type="text" name = "room_name" placeholder="type here" required/>
                         {{ form.room_name }}
@@ -31,6 +31,7 @@
         </div>
     </div>
     <script>
+
         document.querySelector('#room-name-input').focus();
         document.querySelector('#room-name-input').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
@@ -40,7 +41,12 @@
 
         document.querySelector('#room-name-submit').onclick = function(e) {
             var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
+            if (!/^[A-Za-z0-9\-.]+$/.test(roomName)){
+                alert("invalid room name.");
+            } 
+            else{
+                window.location.pathname = '/chat/' + roomName;
+            }
         };
     </script>
 </body>
