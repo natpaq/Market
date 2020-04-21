@@ -2,8 +2,6 @@
 ## Online Marketplace ##
 An online marketplace that allows users to list products up for sale. Users are able to add, update and delete their product listings. Anyone can view the products listed for sale but only authenticated users can add items to their cart, view the total price of their cart, input shipping information and finish their check out. Users can view which items they previously purchased by checking their order history. Authenticated merchants and buyers are also able to chat with sellers in real time using a room ID.
 
-<img src="project/media/images/Webpage.png" width="50%" height="50%">
-
 ## Getting Started ##
 ### Prerequisite Installations ###
 The commands to install everything necessary for deployment are listed below:  
