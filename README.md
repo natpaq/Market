@@ -36,6 +36,6 @@ $ python manage.py test
 
 ## Authors ##
 * [Nathalie Paquin](https://github.com/natpaq "natpaq") - *Team Programming for Accounts and Item Apps*
-* [Aidan Wadin](https://github.com/awadin "awadin") - *Team Programming for Accounts and Item Apps*
+* [Aidan Wadin](https://github.com/awadin "awadin") - 260716182 - *Team Programming for Accounts and Item Apps*
 * [Michelle Lin](https://github.com/mchll-ln "mchll-ln") - 260865595 - *Worked on Chat App* 
 
