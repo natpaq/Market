@@ -13,9 +13,10 @@ $ python3 -m pip install Django
 ```
 Redis and Channels installations are also required:
 ```
-$ sudo apt install redis-server
-$ python3 -m pip install channels
-$ sudo -H  pip3 install channels_redis
+$ sudo apt-get install redis-server
+$ python3 -m pip install channels_redis
+$ sudo apt-get install libssl-dev
+$ python3 -m pip install -U channels
 ```
 Lastly, Stripe installations are required:
 ```
@@ -38,5 +39,5 @@ $ python manage.py test
 ## Authors ##
 * [Nathalie Paquin](https://github.com/natpaq "natpaq") - *Team Programming for Accounts and Item Apps*
 * [Aidan Wadin](https://github.com/awadin "awadin") - *Team Programming for Accounts and Item Apps*
-* [Michelle Lin 260865595](https://github.com/mchll-ln "mchll-ln") - *Worked on Chat App*
+* [Michelle Lin](https://github.com/mchll-ln "mchll-ln") - 260865595 - *Worked on Chat App* 
 
