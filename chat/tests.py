@@ -1,43 +1,33 @@
-from django.test import TestCase, Client, SimpleTestCase
-from views.py import index, room
+import unittest
+from django.test import SimpleTestCase
+from chat.views import main_chat, room
 from django.urls import reverse, resolve
-# Create your tests here.
-    
-from channels.testing import WebsocketCommunicator
-#import pytest
 
-from chat.routing import application
+# Create your tests here.
 
 #Test url routing
-class TestUrls(SimpleTestCase):
+class ChatUrls(SimpleTestCase):
 
 ##index
     def test_main(self):
-        url = reverse('')
-        self.assertEquals(resolve(url).func, main_chat)
+        this_url = reverse('main_chat')
+        self.assertEquals(resolve(this_url).func, main_chat)
 
-class TestViews(TestCase):
+class ChatViews(unittest.TestCase):
 ##room
-    def test_room(self):
-        user = Client()
-        #request or request.GET?
-        url = render(request.GET, 'chat/room.html', {'room_name': 'test',
-            'username': 'bob'
-            })
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'room.html')
+    @classmethod
+    def setUp(self):
+        c = Client()
+        url = reverse('room')
+    
+    def get_request(self):
+        c = Client()
+        r = c.get(url, {'room_name': 'test', 'username': 'bob' })
+        self.assertEquals(r.status_code, 200)
+        self.assertTemplateUsed(r, 'room.html')
 
-    def test_msg(self):
-        response = HttpResponse()
-        response["TestCustomHeader"] = "WebSocket CONNECT"
-        self.assertEquals(response, response["TestCustomHeader"])
-        
-
-##login authen correct redirect
-#Should class testURL =testInput
 
 #test input field 
-class TestInput(TestCase):
 
 ##invalid input -> index
 

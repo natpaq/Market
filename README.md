@@ -1,6 +1,6 @@
 # Project
 ## Online Marketplace ##
-An online marketplace that allows users to list products up for sale. Users are able to add, update and delete their product listings. Anyone can view the products listed for sale but only authenticated users can add items to their cart, view the total price of their cart, input shipping information and finish their check out. Users can view which items they previously purchased by checking their order history. Users are also able to chat with sellers in real time.
+An online marketplace that allows users to list products up for sale. Users are able to add, update and delete their product listings. Anyone can view the products listed for sale but only authenticated users can add items to their cart, view the total price of their cart, input shipping information and finish their check out. Users can view which items they previously purchased by checking their order history. Authenticated merchants and buyers are also able to chat with sellers in real time using a room ID.
 
 <img src="project/media/images/Webpage.png" width="50%" height="50%">
 
@@ -38,5 +38,5 @@ $ python manage.py test
 ## Authors ##
 * [Nathalie Paquin](https://github.com/natpaq "natpaq") - *Team Programming for Accounts and Item Apps*
 * [Aidan Wadin](https://github.com/awadin "awadin") - *Team Programming for Accounts and Item Apps*
-* [Michelle Lin](https://github.com/mchll-ln "mchll-ln") - *Worked on Chat App*
+* [Michelle Lin 260865595](https://github.com/mchll-ln "mchll-ln") - *Worked on Chat App*
 
