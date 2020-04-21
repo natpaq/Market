@@ -1,6 +1,6 @@
 # Project
 ## Online Marketplace ##
-An online marketplace that allows users to list products up for sale. Users are able to add, update and delete their product listings. Anyone can view the products listed for sale but only authenticated users can add items to their cart, view the total price of their cart, input shipping information and finish their check out. Users can view which items they previously purchased by checking their order history. Users are also able to chat with sellers in real time.
+An online marketplace that allows users to list products up for sale. Users are able to add, update and delete their product listings. Anyone can view the products listed for sale but only authenticated users can add items to their cart, view the total price of their cart, input shipping information and finish their check out. Users can view which items they previously purchased by checking their order history. Authenticated merchants and buyers are also able to chat with sellers in real time using a room ID.
 
 <img src="project/media/images/Webpage.png" width="50%" height="50%">
 
@@ -13,9 +13,10 @@ $ python3 -m pip install Django
 ```
 Redis and Channels installations are also required:
 ```
-$ sudo apt install redis-server
-$ python3 -m pip install channels
-$ sudo -H  pip3 install channels_redis
+$ sudo apt-get install redis-server
+$ python3 -m pip install channels_redis
+$ sudo apt-get install libssl-dev
+$ python3 -m pip install -U channels
 ```
 Lastly, Stripe installations are required:
 ```
@@ -35,6 +36,8 @@ In order to run the test cases, use the following command:
 $ python manage.py test
 ```
 
-## Contributors ##
-[Nathalie Paquin](https://github.com/natpaq "natpaq") | [Aidan Wadin](https://github.com/awadin "awadin") | [Michelle Lin](https://github.com/mchll-ln "mchll-ln") 
-------------------------------------------------------|---------------------------------------------------|--------------------------------------------------------------
+## Authors ##
+* [Nathalie Paquin](https://github.com/natpaq "natpaq") - *Team Programming for Accounts and Item Apps*
+* [Aidan Wadin](https://github.com/awadin "awadin") - *Team Programming for Accounts and Item Apps*
+* [Michelle Lin](https://github.com/mchll-ln "mchll-ln") - 260865595 - *Worked on Chat App* 
+
