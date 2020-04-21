@@ -35,6 +35,8 @@ In order to run the test cases, use the following command:
 $ python manage.py test
 ```
 
-## Contributors ##
-[Nathalie Paquin](https://github.com/natpaq "natpaq") | [Aidan Wadin](https://github.com/awadin "awadin") | [Michelle Lin](https://github.com/mchll-ln "mchll-ln") 
-------------------------------------------------------|---------------------------------------------------|--------------------------------------------------------------
+## Authors ##
+* [Nathalie Paquin](https://github.com/natpaq "natpaq") - *Team Programming for Accounts and Item Apps*
+* [Aidan Wadin](https://github.com/awadin "awadin") - *Team Programming for Accounts and Item Apps*
+* [Michelle Lin](https://github.com/mchll-ln "mchll-ln") - *Worked on Chat App*
+
