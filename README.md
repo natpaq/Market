@@ -22,6 +22,8 @@ Lastly, Stripe installations are required:
 $ python3 -m pip install stripe
 $ python3 -m pip install --upgrade stripe
 ```
+Please NOTE: When checking out, please use the dev tool credit card number: 42 repeating. (ex. 4242424242424242) Across the input bar.
+This is the Stripe "test" card number. 
 ## Deployment ##
 Once everything necessary is installed, run the program with:
 ```
