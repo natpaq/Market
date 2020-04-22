@@ -56,7 +56,7 @@ Aidan:
 - Collaborated on managing item editing
 - Code refactoring
 - Edited video Demo
-- Added Messages to certian actions
+- Added Messages to certain actions
 
 Nathalie:
 - Implemented user sign up, login and logout
@@ -73,6 +73,6 @@ Nathalie:
 Michelle:
 - Coded front end and back end for chat application
 - Created UI for chat app
-- Configured the Websocket and ASGI Consumer
-- Implemented validity input checks for chat app
+- Configured the Websocket client and server sides & ASGI Consumer
+- Implemented validity input checks and redirections for chat app
 
