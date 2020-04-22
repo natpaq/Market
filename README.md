@@ -49,10 +49,24 @@ Aidan:
 - Created test cases
 - Managed form checking (valid forms or not)
 - Managed item inventory checks (valid to add to cart or not)
-- Did General debugging
+- Did general debugging
 - Generated Stripe integration
-- Contributed to Checkout Pipeline
-- Managed item editing
-- Checked code quality
+- Collaborated on implementation of checkout pipeline 
+- Collaborated on managing item editing
+- Code refactoring
 - Edited video Demo
+
+Nathalie:
+- Implemented user sign up, login and logout
+- Enabled users to add item listings
+- Collaborated on managing item editing
+- Created different views for empty cart / no order cases
+- Enabled different user options depending on authentication status
+- Various bug fixes
+- Code refactoring
+- Ensured design consistencies for item and accounts app templates
+- Collaborated on implementation of checkout pipeline
+- Created favicon
+
+Michelle:
 
