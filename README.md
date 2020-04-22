@@ -70,10 +70,8 @@ Nathalie:
 - Created favicon
 
 Michelle:
-- Integrated the front end of the chat application to be responsive to the back end
-- Researched, designed, and adapted the chat application UI to the application needs
-- Configured the Websocket and ASGI Consumer to the application needs 
-- Implemented and ensured additional message context was sent and received appropiately
-- Set up and troubleshooted the appropiate Websocket environment
-- Implemented validity input checks and appropiate redirections for the chat room name submission
+- Coded front end and back end for chat application
+- Created UI for chat app
+- Configured the Websocket and ASGI Consumer
+- Implemented validity input checks for chat app
 
