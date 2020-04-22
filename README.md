@@ -52,5 +52,7 @@ Aidan:
 - Did General debugging
 - Generated Stripe integration
 - Contributed to Checkout Pipeline
-
+- Managed item editing
+- Checked code quality
+- Edited video Demo
 
