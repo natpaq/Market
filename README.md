@@ -41,3 +41,16 @@ $ python manage.py test
 * [Aidan Wadin](https://github.com/awadin "awadin") - 260716182 - *Team Programming for Accounts and Item Apps*
 * [Michelle Lin](https://github.com/mchll-ln "mchll-ln") - 260865595 - *Worked on Chat App* 
 
+## Main Contributions ##
+
+Aidan:
+- Designed main UI (buttons and overall design)
+- Created item posting 
+- Created test cases
+- Managed form checking (valid forms or not)
+- Managed item inventory checks (valid to add to cart or not)
+- Did General debugging
+- Generated Stripe integration
+- Contributed to Checkout Pipeline
+
+
